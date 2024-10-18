@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>달력</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #2d374b;
+      }
+
+      .calendar {
+        width: 240px;
+        height: 250px;
+        background-color: #1f2839;
+        border-radius: 10px;
+        color: white;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .calendar h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        margin-top: 10px;
+      }
+
+      .day {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2px;
+        transition: background-color 0.3s; /* 부드러운 전환 효과 */
+      }
+
+      .day:hover {
+        background-color: #4de785; /* 마우스 오버 시 색상 */
+        border-radius: 5px; /* 모서리 둥글게 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calendar">
+      <h2>10월 2024</h2>
+      <div class="days">
+        <div class="day">일</div>
+        <div class="day">월</div>
+        <div class="day">화</div>
+        <div class="day">수</div>
+        <div class="day">목</div>
+        <div class="day">금</div>
+        <div class="day">토</div>
+
+        <div class="day"></div>
+        <div class="day"></div>
+        <div class="day">1</div>
+        <div class="day">2</div>
+        <div class="day">3</div>
+        <div class="day">4</div>
+        <div class="day">5</div>
+        <div class="day">6</div>
+        <div class="day">7</div>
+        <div class="day">8</div>
+        <div class="day">9</div>
+        <div class="day">10</div>
+        <div class="day">11</div>
+        <div class="day">12</div>
+        <div class="day">13</div>
+        <div class="day">14</div>
+        <div class="day">15</div>
+        <div class="day">16</div>
+        <div class="day">17</div>
+        <div class="day">18</div>
+        <div class="day">19</div>
+        <div class="day">20</div>
+        <div class="day">21</div>
+        <div class="day">22</div>
+        <div class="day">23</div>
+        <div class="day">24</div>
+        <div class="day">25</div>
+        <div class="day">26</div>
+        <div class="day">27</div>
+        <div class="day">28</div>
+        <div class="day">29</div>
+        <div class="day">30</div>
+        <div class="day">31</div>
+      </div>
+    </div>
+  </body>
+</html>
