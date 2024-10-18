@@ -3,108 +3,118 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>테트리스</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>yoonwhan_ji</title>
     <style>
       body {
+        background-color: #121212;
+        color: white;
+        font-family: "Arial", sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
       }
 
       #gameArea {
-        border: 2px solid #000;
-        position: relative;
+        border: 5px solid #444;
+        border-radius: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
       }
 
       canvas {
-        background: #eee;
+        background: #222;
+        display: block;
+        border-radius: 10px;
       }
 
       #controls {
+        display: flex;
+        justify-content: center;
         margin-top: 20px;
       }
 
       button {
-        margin: 5px;
+        background-color: #555;
+        color: white;
+        border: none;
+        border-radius: 10px;
         padding: 10px 15px;
         font-size: 16px;
+        margin: 0 5px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #777;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
       }
     </style>
   </head>
   <body>
     <div id="gameArea">
+      <h2>yoonwhan 테트리스</h2>
       <canvas id="tetris" width="240" height="400"></canvas>
     </div>
     <div id="controls">
-      <button id="left">왼쪽</button>
-      <button id="rotate">회전</button>
-      <button id="right">오른쪽</button>
-      <button id="down">내리기</button>
+      <button id="left">← 왼쪽</button>
+      <button id="rotate">↻ 회전</button>
+      <button id="right">→ 오른쪽</button>
+      <button id="down">↓ 내리기</button>
     </div>
     <script>
       const canvas = document.getElementById("tetris");
       const context = canvas.getContext("2d");
 
       context.scale(20, 20);
-
       let board = Array.from({ length: 20 }, () => Array(12).fill(0));
       let player = { pos: { x: 5, y: 0 }, matrix: createPiece() };
-      let dropInterval = 1000; // 기본 드롭 간격
+      let dropInterval = 1000;
       let lastTime = 0;
 
       function createPiece() {
         const pieces = "ijlostz";
         const type = pieces[Math.floor(Math.random() * pieces.length)];
-
-        if (type === "i") {
-          return [
-            [1, 1, 1, 1],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-          ];
-        }
-        if (type === "j") {
-          return [
-            [0, 0, 2],
-            [2, 2, 2],
-            [0, 0, 0],
-          ];
-        }
-        if (type === "l") {
-          return [
-            [3, 0, 0],
-            [3, 3, 3],
-            [0, 0, 0],
-          ];
-        }
-        if (type === "o") {
-          return [
-            [4, 4],
-            [4, 4],
-          ];
-        }
-        if (type === "s") {
-          return [
-            [0, 5, 5],
-            [5, 5, 0],
-            [0, 0, 0],
-          ];
-        }
-        if (type === "z") {
-          return [
-            [6, 6, 0],
-            [0, 6, 6],
-            [0, 0, 0],
-          ];
-        }
-        if (type === "t") {
-          return [
-            [0, 7, 0],
-            [7, 7, 7],
-            [0, 0, 0],
-          ];
+        switch (type) {
+          case "i":
+            return [[1, 1, 1, 1]];
+          case "j":
+            return [
+              [0, 2, 0],
+              [2, 2, 2],
+            ];
+          case "l":
+            return [
+              [3, 0, 0],
+              [3, 3, 3],
+            ];
+          case "o":
+            return [
+              [4, 4],
+              [4, 4],
+            ];
+          case "s":
+            return [
+              [0, 5, 5],
+              [5, 5, 0],
+            ];
+          case "z":
+            return [
+              [6, 6, 0],
+              [0, 6, 6],
+            ];
+          case "t":
+            return [
+              [0, 7, 0],
+              [7, 7, 7],
+            ];
         }
       }
 
@@ -118,7 +128,7 @@
         matrix.forEach((row, y) => {
           row.forEach((value, x) => {
             if (value) {
-              context.fillStyle = getColor(value); // 색상 지정
+              context.fillStyle = getColor(value);
               context.fillRect(x + offset.x, y + offset.y, 1, 1);
             }
           });
@@ -184,15 +194,15 @@
         while (!collide(board, player)) {
           player.pos.y++;
         }
-        player.pos.y--; // 마지막으로 올라온 위치로 되돌리기
+        player.pos.y--;
         merge(board, player);
         removeRows();
-        player.matrix = createPiece(); // 새로운 도형 생성
+        player.matrix = createPiece();
         player.pos.y = 0;
         player.pos.x = 5;
         if (collide(board, player)) {
           alert("게임 오버");
-          board = Array.from({ length: 20 }, () => Array(12).fill(0)); // 리셋
+          board = Array.from({ length: 20 }, () => Array(12).fill(0));
         }
       }
 
@@ -203,17 +213,17 @@
             player.pos.y--;
             merge(board, player);
             removeRows();
-            player.matrix = createPiece(); // 새로운 도형 생성
+            player.matrix = createPiece();
             player.pos.y = 0;
             player.pos.x = 5;
             if (collide(board, player)) {
               alert("게임 오버");
-              board = Array.from({ length: 20 }, () => Array(12).fill(0)); // 리셋
+              board = Array.from({ length: 20 }, () => Array(12).fill(0));
             }
           }
           lastTime = 0;
         }
-        lastTime += 1000 / 60; // 프레임을 60으로 나누어 시간 조절
+        lastTime += 1000 / 60;
         draw();
         requestAnimationFrame(update);
       }
@@ -226,7 +236,7 @@
       document.getElementById("rotate").addEventListener("click", () => {
         const originalMatrix = player.matrix;
         player.matrix = rotate(player.matrix);
-        if (collide(board, player)) player.matrix = originalMatrix; // 회전 실패 시 원래 모양 복원
+        if (collide(board, player)) player.matrix = originalMatrix;
       });
 
       document.getElementById("right").addEventListener("click", () => {
@@ -235,7 +245,7 @@
       });
 
       document.getElementById("down").addEventListener("click", () => {
-        drop(); // 내리기 버튼 누르면 바닥으로 바로 떨어짐
+        drop();
       });
 
       function rotate(matrix) {
