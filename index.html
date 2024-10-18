@@ -1,11 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./CSS.CSS" />
+    <title>포트폴리오</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+      }
+      header {
+        padding: 50px 0;
+      }
+      h1 {
+        font-size: 3em;
+        margin: 0;
+      }
+      nav {
+        margin: 20px 0;
+      }
+      nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+      nav a:hover {
+        color: #ffdd57;
+      }
+      .portfolio {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        max-width: 1000px; /* 최대 너비 설정 */
+        margin: 0 auto; /* 가운데 정렬 */
+      }
+      .project {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        transition: transform 0.3s;
+      }
+      .project:hover {
+        transform: scale(1.05);
+      }
+      footer {
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        width: 100%; /* 전체 너비 */
+      }
+    </style>
   </head>
-  <h1>안녕하세요 지윤환입니다.</h1>
-  <body></body>
+  <body>
+    <header>
+      <h1>내 pp(지윤환)</h1>
+      <nav>
+        <a href="#about">소개</a>
+        <a href="#projects">프로젝트</a>
+        <a href="#contact">연락하기</a>
+      </nav>
+    </header>
+
+    <section id="about">
+      <h2>소개</h2>
+      <p>안녕하세요!</p>
+    </section>
+
+    <section id="projects">
+      <h2>프로젝트</h2>
+      <div class="portfolio">
+        <div class="project">
+          <h3>프로젝트 1</h3>
+          <p>설명: 이 프로젝트는 ...</p>
+          <button onclick="alert('프로젝트 1 자세히 보기')">자세히 보기</button>
+        </div>
+        <div class="project">
+          <h3>프로젝트 2</h3>
+          <p>설명: 이 프로젝트는 ...</p>
+          <button onclick="alert('프로젝트 2 자세히 보기')">자세히 보기</button>
+        </div>
+        <div class="project">
+          <h3>프로젝트 3</h3>
+          <p>설명: 이 프로젝트는 ...</p>
+          <button onclick="alert('프로젝트 3 자세히 보기')">자세히 보기</button>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <h2>연락하기</h2>
+      <p>이메일: example@example.com</p>
+      <p>소셜 미디어 링크</p>
+    </footer>
+  </body>
 </html>
