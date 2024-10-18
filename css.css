@@ -14,6 +14,7 @@ html {
 a {
   color: rgb(255, 255, 255); /* 기본 링크 색상 설정 */
   text-decoration: none; /* 밑줄 제거 */
+  text-decoration: none;
 }
 
 a:visited {
