@@ -1,141 +1,250 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <!-- HTML Meta Tags -->
-  <title>포트폴리오</title>
-  <meta name="description" content="" />
-
-  <!-- Facebook Meta Tags -->
-  <meta property="og:url" content="https://yoonwhan-ji.github.io" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="포트폴리오" />
-  <meta property="og:description" content="" />
-  <meta property="og:image" content="" />
-
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta property="twitter:domain" content="yoonwhan-ji.github.io" />
-  <meta property="twitter:url" content="https://yoonwhan-ji.github.io" />
-  <meta name="twitter:title" content="포트폴리오" />
-  <meta name="twitter:description" content="" />
-  <meta name="twitter:image" content="" />
-
-  <!-- Meta Tags Generated via https://www.opengraph.xyz -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>수정</title>
+    <title>테트리스</title>
+    <link rel="stylesheet" href="styles.css" />
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #6a11cb, #2575fc);
-        color: white;
-        margin: 0;
-        padding: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        text-align: center;
       }
-      header {
-        padding: 50px 0;
+
+      #gameArea {
+        border: 2px solid #000;
+        position: relative;
       }
-      h1 {
-        font-size: 2.5em; /* 모바일에 적합한 크기로 조정 */
-        margin: 0;
+
+      canvas {
+        background: #eee;
       }
-      nav {
-        margin: 20px 0;
+
+      #controls {
+        margin-top: 20px;
       }
-      nav a {
-        color: white;
-        margin: 0 15px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: color 0.3s;
-      }
-      nav a:hover {
-        color: #ffdd57;
-      }
-      .portfolio {
-        display: grid;
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(250px, 1fr)
-        ); /* 더 작은 화면에 맞게 조정 */
-        gap: 20px;
-        padding: 20px;
-        max-width: 1000px; /* 최대 너비 설정 */
-        margin: 0 auto; /* 가운데 정렬 */
-      }
-      .project {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        padding: 20px;
-        transition: transform 0.3s;
-      }
-      .project:hover {
-        transform: scale(1.05);
-      }
-      footer {
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.5);
-        width: 100%; /* 전체 너비 */
-      }
-      @media (max-width: 600px) {
-        h1 {
-          font-size: 2em; /* 작은 화면에서 제목 크기 조정 */
-        }
-        nav a {
-          margin: 0 5px; /* 링크 간격 조정 */
-        }
-        .project {
-          padding: 15px; /* 모바일에서 패딩 조정 */
-        }
+
+      button {
+        margin: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>내 pp(지윤환)</h1>
-      <nav>
-        <a href="#about">소개</a>
-        <a href="#projects">프로젝트</a>
-        <a href="#contact">연락하기</a>
-      </nav>
-    </header>
+    <div id="gameArea">
+      <canvas id="tetris" width="240" height="400"></canvas>
+    </div>
+    <div id="controls">
+      <button id="left">왼쪽</button>
+      <button id="rotate">회전</button>
+      <button id="right">오른쪽</button>
+      <button id="down">내리기</button>
+    </div>
+    <script>
+      const canvas = document.getElementById("tetris");
+      const context = canvas.getContext("2d");
 
-    <section id="about">
-      <h2>소개</h2>
-      <p>안녕하세요!</p>
-    </section>
+      context.scale(20, 20);
 
-    <section id="projects">
-      <h2>프로젝트</h2>
-      <div class="portfolio">
-        <div class="project">
-          <h3>프로젝트 1</h3>
-          <p>설명: 이 프로젝트는 ...</p>
-          <button onclick="alert('프로젝트 1 자세히 보기')">자세히 보기</button>
-        </div>
-        <div class="project">
-          <h3>프로젝트 2</h3>
-          <p>설명: 이 프로젝트는 ...</p>
-          <button onclick="alert('프로젝트 2 자세히 보기')">자세히 보기</button>
-        </div>
-        <div class="project">
-          <h3>프로젝트 3</h3>
-          <p>설명: 이 프로젝트는 ...</p>
-          <button onclick="alert('프로젝트 3 자세히 보기')">자세히 보기</button>
-        </div>
-      </div>
-    </section>
+      let board = Array.from({ length: 20 }, () => Array(12).fill(0));
+      let player = { pos: { x: 5, y: 0 }, matrix: createPiece() };
+      let dropInterval = 1000; // 기본 드롭 간격
+      let lastTime = 0;
 
-    <footer id="contact">
-      <h2>연락하기</h2>
-      <p>이메일: example@example.com</p>
-      <p>소셜 미디어 링크f</p>
-    </footer>
+      function createPiece() {
+        const pieces = "ijlostz";
+        const type = pieces[Math.floor(Math.random() * pieces.length)];
+
+        if (type === "i") {
+          return [
+            [1, 1, 1, 1],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+          ];
+        }
+        if (type === "j") {
+          return [
+            [0, 0, 2],
+            [2, 2, 2],
+            [0, 0, 0],
+          ];
+        }
+        if (type === "l") {
+          return [
+            [3, 0, 0],
+            [3, 3, 3],
+            [0, 0, 0],
+          ];
+        }
+        if (type === "o") {
+          return [
+            [4, 4],
+            [4, 4],
+          ];
+        }
+        if (type === "s") {
+          return [
+            [0, 5, 5],
+            [5, 5, 0],
+            [0, 0, 0],
+          ];
+        }
+        if (type === "z") {
+          return [
+            [6, 6, 0],
+            [0, 6, 6],
+            [0, 0, 0],
+          ];
+        }
+        if (type === "t") {
+          return [
+            [0, 7, 0],
+            [7, 7, 7],
+            [0, 0, 0],
+          ];
+        }
+      }
+
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawMatrix(board, { x: 0, y: 0 });
+        drawMatrix(player.matrix, player.pos);
+      }
+
+      function drawMatrix(matrix, offset) {
+        matrix.forEach((row, y) => {
+          row.forEach((value, x) => {
+            if (value) {
+              context.fillStyle = getColor(value); // 색상 지정
+              context.fillRect(x + offset.x, y + offset.y, 1, 1);
+            }
+          });
+        });
+      }
+
+      function getColor(value) {
+        switch (value) {
+          case 1:
+            return "cyan"; // I
+          case 2:
+            return "blue"; // J
+          case 3:
+            return "orange"; // L
+          case 4:
+            return "yellow"; // O
+          case 5:
+            return "green"; // S
+          case 6:
+            return "red"; // Z
+          case 7:
+            return "purple"; // T
+          default:
+            return "black";
+        }
+      }
+
+      function collide(board, player) {
+        for (let y = 0; y < player.matrix.length; y++) {
+          for (let x = 0; x < player.matrix[y].length; x++) {
+            if (
+              player.matrix[y][x] &&
+              (board[y + player.pos.y] &&
+                board[y + player.pos.y][x + player.pos.x]) !== 0
+            ) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      function merge(board, player) {
+        player.matrix.forEach((row, y) => {
+          row.forEach((value, x) => {
+            if (value) {
+              board[y + player.pos.y][x + player.pos.x] = value;
+            }
+          });
+        });
+      }
+
+      function removeRows() {
+        outer: for (let y = board.length - 1; y >= 0; y--) {
+          if (board[y].every((value) => value !== 0)) {
+            board.splice(y, 1);
+            board.unshift(Array(12).fill(0));
+          }
+        }
+      }
+
+      function drop() {
+        while (!collide(board, player)) {
+          player.pos.y++;
+        }
+        player.pos.y--; // 마지막으로 올라온 위치로 되돌리기
+        merge(board, player);
+        removeRows();
+        player.matrix = createPiece(); // 새로운 도형 생성
+        player.pos.y = 0;
+        player.pos.x = 5;
+        if (collide(board, player)) {
+          alert("게임 오버");
+          board = Array.from({ length: 20 }, () => Array(12).fill(0)); // 리셋
+        }
+      }
+
+      function update() {
+        if (lastTime >= dropInterval) {
+          player.pos.y++;
+          if (collide(board, player)) {
+            player.pos.y--;
+            merge(board, player);
+            removeRows();
+            player.matrix = createPiece(); // 새로운 도형 생성
+            player.pos.y = 0;
+            player.pos.x = 5;
+            if (collide(board, player)) {
+              alert("게임 오버");
+              board = Array.from({ length: 20 }, () => Array(12).fill(0)); // 리셋
+            }
+          }
+          lastTime = 0;
+        }
+        lastTime += 1000 / 60; // 프레임을 60으로 나누어 시간 조절
+        draw();
+        requestAnimationFrame(update);
+      }
+
+      document.getElementById("left").addEventListener("click", () => {
+        player.pos.x--;
+        if (collide(board, player)) player.pos.x++;
+      });
+
+      document.getElementById("rotate").addEventListener("click", () => {
+        const originalMatrix = player.matrix;
+        player.matrix = rotate(player.matrix);
+        if (collide(board, player)) player.matrix = originalMatrix; // 회전 실패 시 원래 모양 복원
+      });
+
+      document.getElementById("right").addEventListener("click", () => {
+        player.pos.x++;
+        if (collide(board, player)) player.pos.x--;
+      });
+
+      document.getElementById("down").addEventListener("click", () => {
+        drop(); // 내리기 버튼 누르면 바닥으로 바로 떨어짐
+      });
+
+      function rotate(matrix) {
+        return matrix[0].map((_, index) =>
+          matrix.map((row) => row[index]).reverse()
+        );
+      }
+
+      update();
+    </script>
   </body>
 </html>
