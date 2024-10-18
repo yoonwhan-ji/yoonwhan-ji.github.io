@@ -404,3 +404,31 @@ summary::-webkit-details-marker {
 .slide:not(.active) {
   opacity: 0;
 }
+/* 모바일 ㅋㅋㅋ */
+/* 기본 링크 스타일 */
+a {
+  color: #007bff; /* 기본 링크 색상 */
+  text-decoration: none; /* 밑줄 제거 */
+  padding: 10px; /* 터치 영역 확대 */
+  display: inline-block; /* 클릭 영역을 넓히기 위해 */
+  font-size: 16px; /* 기본 글자 크기 */
+}
+
+/* 호버 스타일 */
+a:hover {
+  text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}
+
+/* 모바일 스타일 */
+@media (max-width: 768px) {
+  a {
+    font-size: 18px; /* 모바일에서 글자 크기 증가 */
+    padding: 15px; /* 터치하기 편하게 패딩 증가 */
+    background-color: #f0f0f0; /* 배경색 추가로 강조 */
+    border-radius: 5px; /* 둥근 모서리 */
+  }
+
+  a:hover {
+    background-color: #e0e0e0; /* 호버 시 배경색 변경 */
+  }
+}
