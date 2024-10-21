@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>정규대리님의 생일 축하합니다!</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        color: white;
+        font-family: "Arial", sans-serif;
+        overflow: hidden;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: 4em;
+        text-align: center;
+        animation: bounce 2s infinite;
+      }
+
+      .balloons {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+      }
+
+      .balloon {
+        width: 50px;
+        height: 70px;
+        background-color: #ffcc00;
+        border-radius: 50px 50px 0 0;
+        position: relative;
+        animation: float 5s infinite;
+      }
+
+      .balloon:before {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 20px;
+        background-color: #8b4513;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-30px);
+        }
+        60% {
+          transform: translateY(-15px);
+        }
+      }
+
+      .button {
+        background-color: #fff;
+        color: #ff7e5f;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 20px;
+      }
+
+      .button:hover {
+        background-color: #feb47b;
+      }
+
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #ffcc00;
+        opacity: 0.8;
+        animation: fall 1s forwards;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100vh);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>정규대리님의 늦은 생일 축하합니다!</h1>
+    <div class="balloons">
+      <div class="balloon" style="animation-delay: 0s"></div>
+      <div class="balloon" style="animation-delay: 0.5s"></div>
+      <div class="balloon" style="animation-delay: 1s"></div>
+      <div class="balloon" style="animation-delay: 1.5s"></div>
+    </div>
+
+    <div class="버튼">
+      <button class="button" onclick="celebrate()">축하 메시지</button>
+    </div>
+
+    <script>
+      const balloons = document.querySelectorAll(".balloon");
+      balloons.forEach((balloon) => {
+        balloon.style.backgroundColor = `hsl(${
+          Math.random() * 360
+        }, 100%, 50%)`;
+      });
+
+      function celebrate() {
+        alert(
+          "정규대리님 생일 축하합니다. 허리 많이 아프다고 하셨는데 쾌차하셔야 해요! 알코홀 라이프를 위해 항상 건강하게 지내세요. 원래 정규대리님을 위한 자리가됬어야 하는데 늦고 심심한 사랑의 말씀을 드립니다. 온농봐용 :) "
+        );
+        createConfetti();
+      }
+
+      function createConfetti() {
+        for (let i = 0; i < 30; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.backgroundColor = `hsl(${
+            Math.random() * 360
+          }, 100%, 50%)`;
+          document.body.appendChild(confetti);
+
+          // Remove confetti after animation
+          setTimeout(() => {
+            confetti.remove();
+          }, 1000);
+        }
+      }
+    </script>
+  </body>
+</html>
