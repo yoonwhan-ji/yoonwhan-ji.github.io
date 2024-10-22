@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(150px, 1fr)
+  ); /* 기본 그리드 설정 */
+  gap: 10px;
+  max-width: 600px; /* 최대 너비 설정 */
+  width: 100%; /* 전체 너비 사용 */
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-card label span {
+  font-size: 18px; /* 원하는 폰트 사이즈 */
+  display: block;
+  margin-top: 5px;
+  color: #333; /* 텍스트 색상 */
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 15px;
+}
+
+/* 미디어 쿼리로 모바일 화면에 맞게 조정 */
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* 2열로 설정 */
+  }
+}
+
+@media (max-width: 400px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* 1열로 설정 */
+  }
+}
+
+img {
+  height: 300px;
+}
