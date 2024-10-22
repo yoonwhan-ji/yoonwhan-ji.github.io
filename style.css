@@ -56,6 +56,8 @@ button {
   }
 }
 
-img {
-  height: 300px;
+.product-card img {
+  width: 100%; /* 카드 너비에 맞게 100%로 설정 */
+  height: auto; /* 비율에 맞게 자동 조정 */
+  max-height: 500px; /* 최대 높이 설정 (원하는 크기로 조정 가능) */
 }
