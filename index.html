@@ -3,160 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>제품 목록</title>
-    <link rel="stylesheet" href="./style.css" />
+    <title>블로그</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <div id="selected-products"></div>
-    <div class="grid-container">
-      <!-- 제품 카드 시작 -->
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133224980.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[미자주] 35개</span>
-        </label>
+  <body class="bg-gray-100 text-gray-900">
+    <header class="bg-white shadow">
+      <div class="container mx-auto px-4 py-6">
+        <h1 class="text-3xl font-bold">내용</h1>
       </div>
-      <!-- 2개 제품 카드들 -->
+    </header>
 
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133340061.jpg" alt="상품 2" />
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[심술12] 1개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[심술10] 5개</span>
-        </label>
-      </div>
-      <!-- 추가 제품 카드들을 계속 작성 -->
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133416762.jpg" alt="상품 2" />
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[자몽에이슬] 2개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[민트초코] 6개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133542098.jpg" alt="상품 2" />
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[우리함께] 1개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[15년산 매취순] 1개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[로드캡션라임] 1개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133624535.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[엑스트라 콜드 피쳐] 6개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133647099.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[클라우드병] 4개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133714689.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[헛개수 1~1.5L] 5개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133656684.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[칠성사이다 1~1.5L] 6개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133730893.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[미자캔맥주 L] 25개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133753668.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[칭따오 미니캔맥주 SS] 8개</span>
-        </label>
-      </div>
+    <main class="container mx-auto px-4 py-6">
+      <article class="bg-white p-6 rounded-lg shadow-lg mb-6">
+        <h2 class="text-2xl font-semibold mb-2">첫 번째 포스트 제목</h2>
+        <p class="text-gray-600">2024년 10월 24일</p>
+        <p class="mt-4">내용</p>
+        <a href="#" class="text-blue-500 mt-4 inline-block">더 읽기 &rarr;</a>
+      </article>
 
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133824268.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[츄하이 S] 3개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[하이네켄 S] 4개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[호가든 S] 5개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[썸머스비 S] 4개</span>
-        </label>
+      <article class="bg-white p-6 rounded-lg shadow-lg mb-6">
+        <h2 class="text-2xl font-semibold mb-2">두 번째 포스트 제목</h2>
+        <p class="text-gray-600">2024년 10월 23일</p>
+        <p class="mt-4">내용.</p>
+        <a href="#" class="text-blue-500 mt-4 inline-block">더 읽기 &rarr;</a>
+      </article>
+
+      <article class="bg-white p-6 rounded-lg shadow-lg mb-6">
+        <h2 class="text-2xl font-semibold mb-2">세 번째 포스트 제목</h2>
+        <p class="text-gray-600">2024년 10월 22일</p>
+        <p class="mt-4">내용</p>
+        <a href="#" class="text-blue-500 mt-4 inline-block">더 읽기 &rarr;</a>
+      </article>
+    </main>
+
+    <footer class="bg-white shadow mt-6">
+      <div class="container mx-auto px-4 py-4 text-center">
+        <p>© 2024 나의 블로그.</p>
+        2024
       </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_133934842.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[빅웨이브 L] 6개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[에델바이스 L] 2개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[호가든 L] 1개</span>
-        </label>
-        <input type="checkbox" id="product2" class="product-checkbox" />
-        <label for="product2">
-          <span>[템트세븐 L] 3개</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_134036627.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[각종헤어 왁스 게스비등] 14~EA</span>
-        </label>
-      </div>
-      <div class="product-card">
-        <img src="./img/KakaoTalk_20241022_134101770.jpg" alt="상품 1" />
-        <input type="checkbox" id="product1" class="product-checkbox" />
-        <label for="product1">
-          <span>[먹태깡 컵라면] 12개</span>
-        </label>
-      </div>
-      <!-- 선택상품끝 -->
-    </div>
-    <button id="submit-btn">선택한 상품 보기</button>
-    <div id="selected-products"></div>
-    <!-- 자바 -->
-    <script src="./script.js"></script>
+    </footer>
   </body>
 </html>
