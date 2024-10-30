@@ -15,18 +15,16 @@
       }
       body {
         background-color: #171717;
-        height: 100vh;
-        width: 100vw;
         color: wheat;
         font-family: "Dongle", sans-serif;
-        overflow: hidden;
-        position: relative; /* 부모 요소에 상대적 위치 설정 */
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden; /* 수평 스크롤 방지 */
       }
 
       .container {
         max-width: 600px;
         margin: 0 auto;
-        padding: 20px;
         opacity: 0;
         transform: translateY(50px);
         animation: fadeInUp 0.6s forwards;
@@ -41,8 +39,8 @@
 
       .header {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column; /* 세로로 정렬 */
+        align-items: center; /* 가운데 정렬 */
         margin-bottom: 20px;
       }
 
@@ -86,18 +84,25 @@
           font-size: 1.2em;
         }
 
+        .search-container {
+          width: 100%; /* 전체 너비 */
+        }
+
         .search-input {
           font-size: 16px;
+          width: 70%; /* 검색창 너비 조정 */
         }
 
         .button {
           font-size: 16px;
+          width: 25%; /* 버튼 크기 조정 */
         }
       }
 
       .search-container {
         display: flex;
         align-items: center;
+        justify-content: center; /* 가운데 정렬 */
       }
 
       .search-input {
@@ -115,14 +120,11 @@
         border-radius: 5px;
         background: #443e3e;
         cursor: pointer;
-        width: 100px;
         margin-left: 10px;
         font-family: "Dongle", sans-serif;
-        overflow: hidden;
         font-size: 16px;
       }
 
-      /* Scroll to Top Button 스타일 */
       .scroll-to-top {
         position: fixed;
         bottom: 20px;
@@ -135,7 +137,7 @@
         height: 50px;
         font-size: 24px;
         cursor: pointer;
-        display: block; /* 항상 표시 */
+        display: block;
       }
     </style>
   </head>
@@ -154,12 +156,11 @@
             placeholder="검색"
             onkeydown="if (event.key === 'Enter') searchText()"
           />
-          <button class="button" onclick="searchText()">enter</button>
-          <button class="button" onclick="resetPage()">refresh</button>
+          <button class="button" onclick="searchText()">검색</button>
+          <button class="button" onclick="resetPage()">새로 고침</button>
         </div>
       </div>
 
-      <!-- 폴더 내용 -->
       <div class="folder" style="--i: 1">
         <div class="folder-title" onclick="toggleContent('folder1')">
           A while ago
@@ -180,7 +181,7 @@
         </div>
         <div class="folder-content" id="folder2">
           <p>이커머스 back단 올라운더</p>
-          <p>개인정보,인사관련등에 대한 강박</p>
+          <p>개인정보, 인사관련등에 대한 강박</p>
           <p>업무관련 개선에 대한 집착</p>
           <p>기능 구현에 대한 갈망</p>
           <p>스트레스 내성 +++</p>
@@ -192,13 +193,12 @@
         </div>
         <div class="folder-content" id="folder3">
           <p>javascript</p>
-          <p>javascript활용 게임,3d 제작</p>
+          <p>javascript 활용 게임, 3D 제작</p>
           <p>이커머스에서 사용할만한 아이템 구상</p>
         </div>
       </div>
     </div>
 
-    <!-- 스크롤 최상단 이동 버튼 -->
     <button class="scroll-to-top" id="scrollToTopBtn" onclick="scrollToTop()">
       ↑
     </button>
