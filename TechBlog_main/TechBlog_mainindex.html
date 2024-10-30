@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechBlog_main</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dongle&family=Oswald:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../reset.css" />
+    <style>
+      body {
+        background-color: #171717;
+        height: 100vh;
+        width: 100vw;
+        color: wheat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: "Dongle", sans-serif;
+      }
+
+      @keyframes titleUp {
+        from {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(-100px);
+          opacity: 0;
+        }
+      }
+
+      @keyframes slide {
+        from {
+          transform: translateX(500px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      h1 {
+        font-size: 45px;
+        opacity: 0;
+        animation: slide 1s forwards;
+        margin: 0;
+        animation-delay: 0.5s;
+      }
+
+      a {
+        font-size: 24px;
+        text-decoration: none;
+        color: wheat;
+        opacity: 0;
+        animation: slide 1s forwards;
+      }
+
+      div {
+        animation-delay: 1s;
+      }
+
+      div:nth-child(1) a {
+        animation-delay: 1.5s;
+      }
+      div:nth-child(2) a {
+        animation-delay: 1.7s;
+      }
+      div:nth-child(3) a {
+        animation-delay: 1.9s;
+      }
+      div:nth-child(4) a {
+        animation-delay: 2.1s;
+      }
+      div:nth-child(5) a {
+        animation-delay: 2.3s;
+      }
+      div:nth-child(6) a {
+        animation-delay: 2.5s;
+      }
+      div:nth-child(7) a {
+        animation-delay: 2.7s;
+      }
+
+      .split-up {
+        animation: splitUp 0.5s forwards;
+      }
+
+      .split-down {
+        animation: splitDown 0.5s forwards;
+      }
+
+      @keyframes splitUp {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+      }
+
+      @keyframes splitDown {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">Tech_Blog</h1>
+    <div>
+      <a href="../1.aboutme/aboutmeindex.html" class="link">Aboutme</a>
+    </div>
+    <div>
+      <a href="../2.github/githubindex.html" class="link">github</a>
+    </div>
+    <div>
+      <a href="../3.html/htmlindex.html" class="link">html</a>
+    </div>
+    <div>
+      <a href="../4.css/" class="link">css</a>
+    </div>
+    <div>
+      <a href="../5.javascript/javascriptindex.html" class="link">javascript</a>
+    </div>
+    <div>
+      <a href="../6.threejs/threejsindex.html" class="link">Threejs</a>
+    </div>
+
+    <script>
+      const links = document.querySelectorAll(".link");
+      const title = document.getElementById("title");
+
+      links.forEach((link) => {
+        link.addEventListener("click", function (event) {
+          event.preventDefault(); // 기본 링크 동작 방지
+
+          // 제목 위로 올라가기 애니메이션 적용
+          title.style.animation = "titleUp 0.5s forwards"; // 제목 애니메이션 추가
+
+          // 모든 링크에 대해 분리 애니메이션 적용
+          links.forEach((link, index) => {
+            setTimeout(() => {
+              link.classList.add("split-up");
+              setTimeout(() => {
+                link.classList.remove("split-up");
+                link.classList.add("split-down");
+              }, 250); // 0.25초 후에 아래로 이동
+            }, index * 100); // 각 링크마다 0.1초 지연
+          });
+
+          // 모든 애니메이션이 끝난 후 페이지 이동
+          setTimeout(() => {
+            window.location.href = link.href; // 이동할 페이지
+          }, links.length * 100 + 500); // 모든 링크 애니메이션 후 0.5초 대기
+        });
+      });
+    </script>
+  </body>
+</html>

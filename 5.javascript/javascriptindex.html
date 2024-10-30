@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>블로그</title>
+    <link rel="stylesheet" href="../tool/reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dongle&family=Oswald:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #171717;
+        height: 100vh;
+        width: 100vw;
+        color: wheat;
+        font-family: "Dongle", sans-serif;
+        overflow: hidden;
+        font-size: 50px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        opacity: 0;
+        transform: translateY(50px);
+        animation: fadeInUp 0.6s forwards;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .folder {
+        border: 1px solid #ccc;
+        margin: 10px 0;
+        border-radius: 5px;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s forwards;
+        animation-delay: calc(0.2s * var(--i));
+        --i: 0;
+      }
+
+      .folder-title {
+        background: #171717;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .folder-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background: rgb(79, 77, 77);
+        padding: 0 10px;
+      }
+
+      .folder-content.show {
+        max-height: 200px;
+        padding: 10px;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 10px;
+        }
+
+        .folder-title {
+          font-size: 1.2em;
+        }
+
+        .search-input {
+          font-size: 20px; /* 모바일에서 폰트 크기 조정 */
+        }
+
+        .button {
+          font-size: 16px; /* 모바일에서 버튼 크기 조정 */
+        }
+      }
+
+      .search-container {
+        display: flex;
+        align-items: center;
+      }
+
+      .search-input {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+        flex-grow: 1;
+      }
+
+      .button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 20px;
+        background: #443e3e;
+        cursor: pointer;
+        font-size: 20px; /* 버튼 텍스트 크기 */
+        width: 100px; /* 버튼 너비 고정 */
+        margin-left: 10px; /* 버튼 사이 간격 */
+        font-family: "Dongle", sans-serif;
+        overflow: hidden;
+        font-size: 25px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1 style="animation-delay: 0.3s; animation: fadeInUp 0.6s forwards">
+          git과github
+        </h1>
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="검색"
+            onkeydown="if (event.key === 'Enter') searchText()"
+          />
+          <button class="button" onclick="searchText()">검색</button>
+          <button class="button" onclick="resetPage()">새로고침</button>
+        </div>
+      </div>
+      <!-- 폴더 내용 -->
+      <div class="folder" style="--i: 1">
+        <div class="folder-title" onclick="toggleContent('folder1')">
+          폴더 1
+        </div>
+        <div class="folder-content" id="folder1">
+          <p>내용 1-1</p>
+          <p>내용 1-2</p>
+        </div>
+      </div>
+      <div class="folder" style="--i: 2">
+        <div class="folder-title" onclick="toggleContent('folder2')">
+          폴더 2
+        </div>
+        <div class="folder-content" id="folder2">
+          <p>내용 2-1</p>
+          <p>내용 2-2</p>
+        </div>
+      </div>
+      <div class="folder" style="--i: 3">
+        <div class="folder-title" onclick="toggleContent('folder3')">
+          폴더 3
+        </div>
+        <div class="folder-content" id="folder3">
+          <p>내용 3-1</p>
+          <p>내용 3-2</p>
+        </div>
+      </div>
+      <div class="folder" style="--i: 4">
+        <div class="folder-title" onclick="toggleContent('folder4')">
+          폴더 4
+        </div>
+        <div class="folder-content" id="folder4">
+          <p>내용 4-1</p>
+          <p>내용 4-2</p>
+        </div>
+      </div>
+      <div class="folder" style="--i: 5">
+        <div class="folder-title" onclick="toggleContent('folder5')">
+          폴더 5
+        </div>
+        <div class="folder-content" id="folder5">
+          <p>내용 5-1</p>
+          <p>내용 5-2</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleContent(contentId) {
+        const content = document.getElementById(contentId);
+        content.classList.toggle("show");
+
+        if (content.classList.contains("show")) {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } else {
+          content.style.maxHeight = "0";
+        }
+      }
+
+      function searchText() {
+        const input = document
+          .getElementById("searchInput")
+          .value.toLowerCase()
+          .trim()
+          .replace(/\s+/g, ""); // 공백 제거
+        const folders = document.querySelectorAll(".folder");
+        let found = false;
+
+        folders.forEach((folder) => {
+          const title = folder
+            .querySelector(".folder-title")
+            .textContent.toLowerCase()
+            .replace(/\s+/g, ""); // 공백 제거
+          const content = folder
+            .querySelector(".folder-content")
+            .textContent.toLowerCase()
+            .replace(/\s+/g, ""); // 공백 제거
+
+          if (title.includes(input) || content.includes(input)) {
+            folder.style.display = "block"; // 검색 결과를 표시
+            found = true;
+
+            // 스크롤을 해당 폴더로 이동
+            folder.scrollIntoView({ behavior: "smooth" });
+          } else {
+            folder.style.display = "none"; // 검색 결과가 아닌 경우 숨김
+          }
+        });
+
+        if (!found) {
+          alert("검색 결과가 없습니다.");
+        }
+      }
+
+      function resetPage() {
+        location.reload(); // 페이지 새로 고침
+      }
+
+      document.querySelectorAll(".folder").forEach((folder, index) => {
+        folder.style.setProperty("--i", index + 1);
+        folder.style.animationDelay = `${0.2 * (index + 1)}s`;
+      });
+    </script>
+  </body>
+</html>
