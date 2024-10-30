@@ -3,15 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>블로그</title>
+    <title>aboutme</title>
     <link rel="stylesheet" href="../tool/reset.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dongle&family=Oswald:wght@200..700&display=swap"
-      rel="stylesheet"
-    />
+
     <style>
+      h1 {
+        font-size: 30px;
+      }
       body {
         background-color: #171717;
         height: 100vh;
@@ -19,7 +17,7 @@
         color: wheat;
         font-family: "Dongle", sans-serif;
         overflow: hidden;
-        font-size: 50px;
+        position: relative; /* 부모 요소에 상대적 위치 설정 */
       }
 
       .container {
@@ -86,11 +84,11 @@
         }
 
         .search-input {
-          font-size: 20px; /* 모바일에서 폰트 크기 조정 */
+          font-size: 16px;
         }
 
         .button {
-          font-size: 16px; /* 모바일에서 버튼 크기 조정 */
+          font-size: 16px;
         }
       }
 
@@ -108,17 +106,33 @@
       }
 
       .button {
+        color: wheat;
         padding: 5px 10px;
         border: none;
-        border-radius: 20px;
+        border-radius: 5px;
         background: #443e3e;
         cursor: pointer;
-        font-size: 20px; /* 버튼 텍스트 크기 */
-        width: 100px; /* 버튼 너비 고정 */
-        margin-left: 10px; /* 버튼 사이 간격 */
+        width: 100px;
+        margin-left: 10px;
         font-family: "Dongle", sans-serif;
         overflow: hidden;
-        font-size: 25px;
+        font-size: 16px;
+      }
+
+      /* Scroll to Top Button 스타일 */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #443e3e;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        display: block; /* 항상 표시 */
       }
     </style>
   </head>
@@ -137,10 +151,11 @@
             placeholder="검색"
             onkeydown="if (event.key === 'Enter') searchText()"
           />
-          <button class="button" onclick="searchText()">검색</button>
-          <button class="button" onclick="resetPage()">새로고침</button>
+          <button class="button" onclick="searchText()">enter</button>
+          <button class="button" onclick="resetPage()">refresh</button>
         </div>
       </div>
+
       <!-- 폴더 내용 -->
       <div class="folder" style="--i: 1">
         <div class="folder-title" onclick="toggleContent('folder1')">
@@ -188,6 +203,11 @@
         </div>
       </div>
     </div>
+
+    <!-- 스크롤 최상단 이동 버튼 -->
+    <button class="scroll-to-top" id="scrollToTopBtn" onclick="scrollToTop()">
+      ↑
+    </button>
 
     <script>
       function toggleContent(contentId) {
@@ -238,6 +258,10 @@
 
       function resetPage() {
         location.reload(); // 페이지 새로 고침
+      }
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
       document.querySelectorAll(".folder").forEach((folder, index) => {
