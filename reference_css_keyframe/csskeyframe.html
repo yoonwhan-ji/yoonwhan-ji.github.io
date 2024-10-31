@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: grey;
+        color: wheat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* 수직 중앙 정렬 */
+        align-items: center; /* 수평 중앙 정렬 */
+
+        margin: 0; /* 기본 여백 제거 */
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-30px);
+        }
+        60% {
+          transform: translateY(-15px);
+        }
+      }
+
+      .key1 {
+        cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .key2 {
+        animation: fadeIn 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes slideIn {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      .key3 {
+        animation: slideIn 2s infinite; /* 애니메이션 적용 */
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .key4 {
+        animation: rotate 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes zoom {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.5);
+        }
+      }
+      .key5 {
+        animation: zoom 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      .key6 {
+        animation: shake 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+      .key7 {
+        animation: pulse 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes wave {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        25% {
+          transform: translateY(-5px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        75% {
+          transform: translateY(-5px);
+        }
+      }
+      .key8 {
+        animation: wave 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes flip {
+        0% {
+          transform: rotateY(0);
+        }
+        100% {
+          transform: rotateY(180deg);
+        }
+      }
+      .key9 {
+        animation: flip 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes fadeAndSlide {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .key10 {
+        animation: fadeAndSlide 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes expand {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.2);
+        }
+      }
+      .key11 {
+        animation: expand 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes roll {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .key12 {
+        animation: roll 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes flash {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      .key13 {
+        animation: flash 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes skew {
+        0% {
+          transform: skew(0deg);
+        }
+        100% {
+          transform: skew(10deg);
+        }
+      }
+      .key14 {
+        animation: skew 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        60% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .key15 {
+        animation: bounceIn 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes swing {
+        0% {
+          transform: rotate(0deg);
+        }
+        20% {
+          transform: rotate(15deg);
+        }
+        40% {
+          transform: rotate(-10deg);
+        }
+        60% {
+          transform: rotate(5deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+      .key16 {
+        animation: swing 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes heartBeat {
+        0%,
+        20%,
+        40%,
+        60%,
+        80%,
+        100% {
+          transform: scale(1);
+        }
+        10%,
+        30%,
+        50%,
+        70% {
+          transform: scale(1.1);
+        }
+      }
+      .key17 {
+        animation: heartBeat 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes jelly {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.05) skew(-10deg);
+        }
+        50% {
+          transform: scale(1.1) skew(10deg);
+        }
+        75% {
+          transform: scale(1.05) skew(-10deg);
+        }
+      }
+      .key18 {
+        animation: jelly 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes bounceOut {
+        0% {
+          transform: scale(1);
+        }
+        20% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(0);
+          opacity: 0;
+        }
+      }
+      .key19 {
+        animation: bounceOut 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes tilt {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(-5deg);
+        }
+        50% {
+          transform: rotate(5deg);
+        }
+        75% {
+          transform: rotate(-5deg);
+        }
+      }
+      .key20 {
+        animation: tilt 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes chase {
+        0% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      .key21 {
+        animation: chase 2s infinite; /* 애니메이션 적용 */
+      }
+      @keyframes slideAndFade {
+        0% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+      .key22 {
+        animation: slideAndFade 2s infinite; /* 애니메이션 적용 */
+      }
+    </style>
+  </head>
+  <body>
+    <p class="key1">Bounce</p>
+    <p class="key2">Fade In</p>
+    <p class="key3">Slide In</p>
+    <p class="key4">Rotate</p>
+    <p class="key5">Zoom</p>
+    <p class="key6">Shake</p>
+    <p class="key7">Pulse</p>
+    <p class="key8">Wave</p>
+    <p class="key9">flip</p>
+    <p class="key10">Fade and Slide</p>
+    <p class="key11">Expand</p>
+    <p class="key12">Roll</p>
+    <p class="key13">Flash</p>
+    <p class="key14">Skew</p>
+    <p class="key15">Bounce In</p>
+    <p class="key16">Swing</p>
+    <p class="key17">heartBeat</p>
+    <p class="key18">jelly</p>
+    <p class="key19">Bounce Out</p>
+    <p class="key20">Tilt</p>
+    <p class="key21">chase</p>
+    <p class="key22">Slide and Fade</p>
+  </body>
+  <script>
+    const element = document.querySelector(".key1");
+
+    element.addEventListener("click", () => {
+      element.style.animation = "bounce 2s 3"; // 애니메이션 시작 바운스/2초간/3번반복
+    });
+
+    // 터치 이벤트 지원 (모바일 기기에서)
+    element.addEventListener("touchstart", () => {
+      element.style.animation = "bounce 2s infinity"; // 애니메이션 시작 바운스 /2초간 영원히
+    });
+  </script>
+</html>
