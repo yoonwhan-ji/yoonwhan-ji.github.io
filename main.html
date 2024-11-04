@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap"
+      rel="stylesheet"
+    />
+    <title>부드러운 비디오 전환</title>
+    <style>
+      body {
+        margin: 0;
+        overflow-y: hidden;
+        height: 100vh;
+        color: white;
+        font-family: Arial, sans-serif;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      body::-webkit-scrollbar {
+        display: none;
+      }
+
+      .video-container {
+        position: relative;
+        width: 100%;
+        height: 300vh;
+      }
+
+      .video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .video.active {
+        opacity: 1;
+      }
+
+      .indicator {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 24px;
+      }
+
+      .scroll-progress {
+        position: fixed;
+        top: 50%;
+        right: 20px;
+        width: 30px;
+        height: 200px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        transform: translateY(-50%);
+        z-index: 10;
+      }
+
+      .scroll-fill {
+        width: 100%;
+        height: 0%;
+        background: rgb(42, 62, 126);
+        transition: height 1s ease;
+      }
+
+      .video-text {
+        font-family: "Zen Dots", sans-serif;
+        font-weight: 400;
+        position: absolute;
+        font-size: 30px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        z-index: 10;
+        opacity: 0;
+        transform: translateX(-100%); /* 시작 위치 */
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* 변환 추가 */
+      }
+
+      .video-text.active {
+        opacity: 1;
+        transform: translateX(0); /* 최종 위치 */
+      }
+
+      /* 개별 텍스트 위치 설정 */
+      #text1 {
+        top: 5%; /* 첫 번째 텍스트 위치 */
+        left: 10%;
+      }
+
+      #text2 {
+        top: 15%; /* 두 번째 텍스트 위치 */
+        left: 30%; /* 왼쪽으로 이동 */
+      }
+
+      #text3 {
+        top: 25%; /* 세 번째 텍스트 위치 */
+        left: 50%; /* 오른쪽으로 이동 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-container">
+      <video
+        id="video1"
+        class="video active"
+        src="./빛나는지구.mp4"
+        autoplay
+        muted
+        loop
+      ></video>
+      <video
+        id="video2"
+        class="video"
+        src="./우주선이륙.mp4"
+        autoplay
+        muted
+        loop
+      ></video>
+      <video
+        id="video3"
+        class="video"
+        src="./end.mp4"
+        autoplay
+        muted
+        loop
+      ></video>
+      <div class="indicator" id="videoIndicator">1</div>
+      <div class="scroll-progress">
+        <div class="scroll-fill" id="scrollFill"></div>
+      </div>
+
+      <div class="video-text" id="text1">
+        Have you ever thought about leaving the Earth?
+      </div>
+      <div class="video-text" id="text2">
+        This is your life chance to change everything.
+      </div>
+      <div class="video-text" id="text3">
+        Take your opportunity, We will join you.
+      </div>
+    </div>
+    <script>
+      const videos = document.querySelectorAll(".video");
+      const texts = document.querySelectorAll(".video-text");
+      const indicator = document.getElementById("videoIndicator");
+      const scrollFill = document.getElementById("scrollFill");
+      let currentVideo = 0;
+
+      function updateIndicator() {
+        indicator.textContent = currentVideo + 1;
+        scrollFill.style.height =
+          ((currentVideo + 1) / videos.length) * 100 + "%";
+      }
+
+      let wheelCounter = 0;
+
+      window.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        wheelCounter++;
+
+        if (wheelCounter >= 5) {
+          if (event.deltaY > 0 && currentVideo < videos.length - 1) {
+            currentVideo++;
+          } else if (event.deltaY < 0 && currentVideo > 0) {
+            currentVideo--;
+          }
+          wheelCounter = 0;
+          updateIndicator();
+          videos.forEach((video, index) => {
+            video.classList.toggle("active", index === currentVideo);
+          });
+          texts.forEach((text, index) => {
+            text.classList.toggle("active", index === currentVideo);
+          });
+        }
+      });
+
+      texts[currentVideo].classList.add("active");
+      updateIndicator();
+    </script>
+  </body>
+</html>
