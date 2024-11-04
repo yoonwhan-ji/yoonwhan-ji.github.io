@@ -2,165 +2,156 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <!-- 문자 인코딩 설정 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- 반응형 웹을 위한 뷰포트 설정 -->
     <link rel="stylesheet" href="styles.css" />
-    <!-- 외부 CSS 파일 링크 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <!-- 구글 폰트에 사전 연결 -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- 구글 폰트의 CORS 설정 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap"
       rel="stylesheet"
     />
-    <!-- 구글 폰트 로드 -->
     <title>부드러운 비디오 전환</title>
-    <!-- 웹 페이지 제목 -->
     <style>
       body {
-        margin: 0; /* 기본 여백 제거 */
-        overflow-y: hidden; /* 수직 스크롤바 숨기기 */
-        height: 100vh; /* 뷰포트 높이 100% 설정 */
-        color: white; /* 텍스트 색상 흰색 */
-        font-family: Arial, sans-serif; /* 기본 글꼴 설정 */
-        scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
-        -ms-overflow-style: none; /* Internet Explorer에서 스크롤바 숨기기 */
+        margin: 0;
+        overflow-y: hidden;
+        height: 100vh;
+        color: white;
+        font-family: Arial, sans-serif;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
 
       body::-webkit-scrollbar {
-        display: none; /* Webkit 기반 브라우저에서 스크롤바 숨기기 */
+        display: none;
       }
 
       .video-container {
-        position: relative; /* 비디오 컨테이너의 상대 위치 설정 */
-        width: 100%; /* 너비 100% */
-        height: 300vh; /* 높이 300vh (3배 높이) */
+        position: relative;
+        width: 100%;
+        height: 300vh;
       }
 
       .video {
-        position: absolute; /* 절대 위치로 설정 */
-        top: 0; /* 상단에 정렬 */
-        left: 0; /* 좌측에 정렬 */
-        width: 100%; /* 너비 100% */
-        height: 100vh; /* 높이 100% */
-        object-fit: cover; /* 비디오가 영역을 가득 채우도록 설정 */
-        opacity: 0; /* 기본적으로 비디오 숨김 */
-        transition: opacity 1s ease-in-out; /* 부드러운 전환 효과 */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
       }
 
       .video.active {
-        opacity: 1; /* active 클래스가 있을 때 비디오 표시 */
+        opacity: 1;
       }
 
       .indicator {
-        position: fixed; /* 고정된 위치 설정 */
-        top: 20px; /* 상단에서 20px 떨어진 위치 */
-        right: 20px; /* 우측에서 20px 떨어진 위치 */
-        background: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
-        padding: 10px; /* 내부 여백 */
-        border-radius: 50px; /* 모서리 둥글게 */
-        font-size: 20px; /* 글자 크기 24px */
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px;
+        font-size: 10px;
       }
 
       .scroll-progress {
-        position: fixed; /* 고정된 위치 설정 */
-        top: 50%; /* 수직 중앙 정렬 */
-        right: 20px; /* 우측에서 20px 떨어진 위치 */
-        width: 20px; /* 너비 30px */
-        height: 500px; /* 높이 500px */
-        background: rgba(0, 0, 0, 0.2); /* 반투명 검은색 배경 */
-        border-radius: 50px; /* 모서리 둥글게 */
-        transform: translateY(-50%); /* 수직 중앙 정렬을 위해 위치 조정 */
-        z-index: 10; /* 다른 요소 위에 표시되도록 설정 */
+        position: fixed;
+        top: 50%;
+        right: 20px;
+        width: 15px;
+        height: 700px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 50px;
+        transform: translateY(-50%);
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
       }
 
       .scroll-fill {
         border-radius: 50px;
-        width: 100%; /* 너비 100% */
-        height: 100%; /* 기본적으로 높이 0% (비어 있음) */
-        background: rgba(49, 49, 49, 0.8); /* 배경색 설정 */
-        transition: height 1s ease; /* 부드러운 높이 전환 효과 */
+        width: 100%;
+        height: 100%; /* Start with 100% height */
+        background: transparent; /* Transparent background */
+        border: 4px solid rgba(255, 255, 255, 0.5); /* White light border */
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Soft white glow */
+        transition: height 1s ease; /* Smooth height transition */
       }
 
       .video-text {
-        font-family: "Zen Dots", sans-serif; /* Zen Dots 폰트 설정 */
-        font-weight: 400; /* 기본 두께 */
-        position: absolute; /* 절대 위치 설정 */
-        font-size: 20px; /* 폰트 크기 20px */
-        color: white; /* 텍스트 색상 흰색 */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* 텍스트 그림자 효과 */
-        z-index: 10; /* 다른 요소 위에 표시되도록 설정 */
-        opacity: 0; /* 기본적으로 숨김 */
-        transform: translateX(-100%); /* 왼쪽에서 이동 */
-        transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* 부드러운 전환 효과 */
+        font-family: "Zen Dots", sans-serif;
+        font-weight: 400;
+        position: absolute;
+        font-size: 20px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        z-index: 10;
+        opacity: 0;
+        transform: translateX(-100%);
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
       }
 
       .video-text.active {
-        opacity: 1; /* active 클래스가 있을 때 텍스트 표시 */
-        transform: translateX(0); /* 위치를 원래대로 복원 */
+        opacity: 1;
+        transform: translateX(0);
       }
 
-      /* 개별 텍스트 위치 설정 */
+      /* Individual text positions */
       #text1 {
-        top: 5%; /* 상단에서 5% 위치 */
-        left: 5%; /* 좌측에서 5% 위치 */
+        top: 5%;
+        left: 5%;
         font-size: 40px;
       }
-
       #text2 {
-        top: 15%; /* 상단에서 15% 위치 */
-        left: 5%; /* 좌측에서 5% 위치 */
+        top: 15%;
+        left: 5%;
         font-size: 40px;
       }
-
       #text3 {
-        top: 25%; /* 상단에서 25% 위치 */
-        left: 5; /* 좌측에서 5% 위치 */
+        top: 25%;
+        left: 5;
         font-size: 40px;
       }
 
       @media (min-width: 600px) {
         .video-text {
-          font-size: 30px; /* 화면 너비가 600px 이상일 경우 폰트 크기 30px */
+          font-size: 30px;
         }
-
         #text1 {
-          left: 10%; /* 텍스트 1의 좌측 위치 조정 */
+          left: 10%;
         }
-
         #text2 {
-          left: 30%; /* 텍스트 2의 좌측 위치 조정 */
+          left: 30%;
         }
-
         #text3 {
-          left: 40%; /* 텍스트 3의 좌측 위치 조정 */
+          left: 40%;
         }
       }
 
       .footer {
-        height: 10%; /* 푸터 높이  */
-        background-color: rgba(49, 49, 49, 0.8); /* 반투명 검은색 배경 */
-        color: white; /* 텍스트 색상 흰색 */
-        display: flex; /* 플렉스 박스 설정 */
-        align-items: center; /* 수직 중앙 정렬 */
-        justify-content: center; /* 수평 중앙 정렬 */
-        position: absolute; /* 절대 위치 설정 */
-        bottom: 0; /* 하단에 고정 */
-        width: 100%; /* 너비 100% */
-        opacity: 0; /* 기본적으로 숨김 */
-        transition: opacity 2s ease-in-out; /* 부드러운 전환 효과 */
-        pointer-events: none; /* 클릭 이벤트 비활성화 */
+        height: 10%;
+        background-color: rgba(49, 49, 49, 0.8);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
+        pointer-events: none;
         font-size: 10px;
         justify-content: space-evenly;
-        font-family: "Zen Dots", sans-serif; /* Zen Dots 폰트 설정 */
-        font-weight: 400; /* 기본 두께 */
+        font-family: "Zen Dots", sans-serif;
+        font-weight: 400;
       }
 
       .footer.active {
-        opacity: 1; /* active 클래스가 있을 때 푸터 표시 */
-        pointer-events: auto; /* 클릭 이벤트 활성화 */
+        opacity: 1;
+        pointer-events: auto;
       }
     </style>
   </head>
@@ -191,10 +182,8 @@
         loop
       ></video>
       <div class="indicator" id="videoIndicator">1</div>
-      <!-- 현재 비디오 인디케이터 -->
       <div class="scroll-progress">
         <div class="scroll-fill" id="scrollFill"></div>
-        <!-- 스크롤 진행 표시 -->
       </div>
 
       <div class="video-text" id="text1">
@@ -209,7 +198,6 @@
     </div>
     <footer class="footer" id="footer">
       <div class="footer-logo"><img src="./logo.png" alt="" /></div>
-
       <div class="footer-txt">
         <p>
           ADDRESS : 서울 강남구 강남대로 324 역삼 디오슈페리움 2 층
@@ -218,73 +206,66 @@
         <p>CONTACT : 010-0000-0000.</p>
         <p>E-MAIL : ZERO-MILEAGE@gmail.com.</p>
       </div>
-
-      <!-- 푸터 내용 -->
     </footer>
     <script>
-      const videos = document.querySelectorAll(".video"); // 모든 비디오 요소 선택
-      const texts = document.querySelectorAll(".video-text"); // 모든 비디오 텍스트 요소 선택
-      const indicator = document.getElementById("videoIndicator"); // 비디오 인디케이터 요소 선택
-      const scrollFill = document.getElementById("scrollFill"); // 스크롤 진행 바 요소 선택
-      const footer = document.getElementById("footer"); // 푸터 요소 선택
-      let currentVideo = 0; // 현재 비디오 인덱스 초기화
-      let wheelCount = 0; // 휠 카운트 초기화
+      const videos = document.querySelectorAll(".video");
+      const texts = document.querySelectorAll(".video-text");
+      const indicator = document.getElementById("videoIndicator");
+      const scrollFill = document.getElementById("scrollFill");
+      const footer = document.getElementById("footer");
+      let currentVideo = 0;
+      let wheelCount = 0;
 
       function updateIndicator() {
-        indicator.textContent = currentVideo + 1; // 현재 비디오 번호 업데이트
+        indicator.textContent = currentVideo + 1;
         scrollFill.style.height =
-          ((currentVideo + 1) / videos.length) * 100 + "%"; // 스크롤 진행 바 업데이트
-        footer.classList.toggle("active", currentVideo === 2); // 3번째 비디오일 때만 푸터 표시
+          ((videos.length - currentVideo - 1) / (videos.length - 1)) * 100 +
+          "%"; // Adjust to count down
+        footer.classList.toggle("active", currentVideo === 2);
       }
 
-      // 휠 이벤트 리스너
       window.addEventListener("wheel", (event) => {
-        event.preventDefault(); // 기본 스크롤 동작 방지
-        wheelCount++; // 휠 카운트 증가
+        event.preventDefault();
+        wheelCount++;
 
         if (wheelCount >= 5) {
-          // 휠이 5번 이상 돌리면
-          handleScroll(event.deltaY); // 스크롤 처리 함수 호출
-          wheelCount = 0; // 카운트 초기화
+          handleScroll(event.deltaY);
+          wheelCount = 0;
         }
       });
 
-      let touchStartY = 0; // 터치 시작 위치 초기화
+      let touchStartY = 0;
       window.addEventListener("touchstart", (event) => {
-        touchStartY = event.touches[0].clientY; // 터치 시작 위치 저장
+        touchStartY = event.touches[0].clientY;
       });
 
-      // 터치 이동 이벤트 리스너
       window.addEventListener("touchmove", (event) => {
-        const touchEndY = event.touches[0].clientY; // 터치 종료 위치 저장
-        const deltaY = touchStartY - touchEndY; // 이동 거리 계산
-        handleScroll(deltaY); // 스크롤 처리 함수 호출
+        const touchEndY = event.touches[0].clientY;
+        const deltaY = touchStartY - touchEndY;
+        handleScroll(deltaY);
       });
 
-      // 스크롤 처리 함수
       function handleScroll(deltaY) {
         if (deltaY > 50 && currentVideo < videos.length - 1) {
-          currentVideo++; // 아래로 스크롤 시 다음 비디오로 이동
+          currentVideo++;
         } else if (deltaY < -50 && currentVideo > 0) {
-          currentVideo--; // 위로 스크롤 시 이전 비디오로 이동
+          currentVideo--;
         }
-        updateVideosAndTexts(); // 비디오 및 텍스트 업데이트 함수 호출
+        updateVideosAndTexts();
       }
 
-      // 비디오 및 텍스트 업데이트 함수
       function updateVideosAndTexts() {
-        updateIndicator(); // 인디케이터 업데이트 호출
+        updateIndicator();
         videos.forEach((video, index) => {
-          video.classList.toggle("active", index === currentVideo); // 현재 비디오에 active 클래스 추가
+          video.classList.toggle("active", index === currentVideo);
         });
         texts.forEach((text, index) => {
-          text.classList.toggle("active", index === currentVideo); // 현재 텍스트에 active 클래스 추가
+          text.classList.toggle("active", index === currentVideo);
         });
       }
 
-      // 초기 상태 설정
-      texts[currentVideo].classList.add("active"); // 현재 비디오 텍스트 표시
-      updateIndicator(); // 초기 인디케이터 업데이트
+      texts[currentVideo].classList.add("active");
+      updateIndicator();
     </script>
   </body>
 </html>
