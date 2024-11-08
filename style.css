@@ -36,6 +36,7 @@ body {
   outline: none;
   padding: 20px; /* 상하 여백 추가 */
   transition: transform 0.5s ease; /* 마우스 오버 시 확대 효과 */
+  text-align: center;
 }
 
 .button-image {
@@ -58,13 +59,13 @@ body {
 /* 이름 텍스트 스타일 */
 .name {
   font-family: "Dongle", sans-serif;
-  font-weight: 700;
+  font-weight: 100;
   font-style: normal;
   position: absolute;
   top: 25%; /* 수직 중앙 정렬 */
   left: 50%; /* 수평 중앙 정렬 */
   transform: translate(-50%, -50%); /* 중앙 정렬 조정 */
-  color: #62345b; /* 글자 색상 */
+  color: #ffffff; /* 글자 색상 */
   font-size: 50px; /* 글자 크기 */
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* 글자 그림자 */
   pointer-events: none; /* 클릭 이벤트 무시 */
@@ -127,4 +128,8 @@ body {
 
 .slide-active {
   left: 0; /* 현재 위치 */
+}
+
+.name {
+  margin-top: 75px;
 }
