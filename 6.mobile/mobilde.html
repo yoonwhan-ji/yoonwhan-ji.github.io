@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>소셜 네트워크</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        background-color: #1a1a1a; /* 어두운 배경색 */
+        color: #ffffff; /* 텍스트 색상 */
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: #333333; /* 다크 색상 */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .logo {
+        font-weight: bold;
+        font-size: 24px;
+        margin-right: auto;
+      }
+
+      .search-bar {
+        border: 1px solid #555555;
+        border-radius: 20px;
+        padding: 10px;
+        width: 70%;
+        background: #222222; /* 다크 배경 */
+        color: #ffffff;
+      }
+
+      .feed {
+        padding: 15px;
+      }
+
+      .post-card {
+        background: #2a2a2a; /* 카드 배경 */
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        transition: transform 0.2s;
+      }
+
+      .post-card:hover {
+        transform: scale(1.02);
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .profile-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        border: 2px solid #ffffff; /* 프로필 이미지 테두리 */
+      }
+
+      .username {
+        font-weight: bold;
+      }
+
+      .post-content {
+        margin: 10px 0;
+      }
+
+      .post-actions {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-around;
+        background-color: #333333;
+        padding: 10px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .nav-btn {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">소셜앱</div>
+      <input type="text" class="search-bar" placeholder="검색하기..." />
+    </header>
+    <main>
+      <div class="feed" id="feed">
+        <div class="post-card">
+          <div class="user-info">
+            <img src="profile1.jpg" alt="User" class="profile-img" />
+            <div class="username">사용자1</div>
+          </div>
+          <div class="post-content">여기에 게시물 내용이 들어갑니다.</div>
+          <div class="post-actions">
+            <button class="like-btn" onclick="toggleLike(this)">
+              👍 좋아요
+            </button>
+            <button class="comment-btn" onclick="addComment(this)">
+              💬 댓글
+            </button>
+          </div>
+          <div class="comments"></div>
+        </div>
+        <!-- 더 많은 게시물 카드 추가 가능 -->
+      </div>
+    </main>
+    <nav>
+      <button class="nav-btn">🏠</button>
+      <button class="nav-btn">👥</button>
+      <button class="nav-btn">🔔</button>
+      <button class="nav-btn">👤</button>
+    </nav>
+    <script>
+      function toggleLike(button) {
+        if (button.innerText.includes("좋아요")) {
+          button.innerText = "❤️ 취소";
+          button.style.color = "red";
+        } else {
+          button.innerText = "👍 좋아요";
+          button.style.color = "";
+        }
+      }
+
+      function addComment(button) {
+        const postCard = button.closest(".post-card");
+        const commentsDiv = postCard.querySelector(".comments");
+
+        const comment = prompt("댓글을 입력하세요:");
+        if (comment) {
+          const commentElement = document.createElement("div");
+          commentElement.innerText = comment;
+          commentElement.style.marginTop = "5px";
+          commentsDiv.appendChild(commentElement);
+        }
+      }
+    </script>
+  </body>
+</html>
