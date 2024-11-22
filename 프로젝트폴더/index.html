@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>프로젝트 관리 및 댓글</title>
+        <style>
+            body {
+                font-family: "Arial", sans-serif;
+                background-color: #f4f4f9;
+                color: #333;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            header {
+                background-color: #4caf50;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                font-size: 24px;
+            }
+
+            .container {
+                width: 80%;
+                margin: 20px auto;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+
+            h2 {
+                font-size: 1.8em;
+                color: #4caf50;
+                margin-bottom: 20px;
+            }
+
+            .comment-section,
+            .progress-section {
+                margin-bottom: 30px;
+            }
+
+            textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+                margin-bottom: 10px;
+                resize: vertical;
+            }
+
+            button {
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            #commentList {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            #commentList li {
+                background-color: #f9f9f9;
+                margin: 10px 0;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            #commentList li button {
+                background-color: #f44336;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .project-container {
+                margin-top: 20px;
+            }
+
+            .project {
+                margin-bottom: 20px;
+            }
+
+            .project-name {
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .task-list {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .task-item {
+                margin: 5px 0;
+            }
+
+            .progress-bar-container {
+                margin-top: 10px;
+            }
+
+            .progress-bar {
+                width: 100%;
+                background-color: #e0e0e0;
+                border-radius: 20px;
+                height: 20px;
+                margin-top: 10px;
+            }
+
+            .progress-bar span {
+                display: block;
+                height: 100%;
+                background-color: #4caf50;
+                border-radius: 20px;
+            }
+
+            .task-item button {
+                background-color: #f44336;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-left: 10px;
+            }
+
+            .reset-btn {
+                background-color: #f44336;
+                color: white;
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 20px;
+                display: block;
+                width: 100%;
+            }
+
+            .reset-btn:hover {
+                background-color: #d32f2f;
+            }
+
+            /* 비밀번호 입력화면 스타일 */
+            #passwordPrompt {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.5);
+                position: fixed;
+                width: 100%;
+                top: 0;
+            }
+
+            #passwordPrompt input {
+                padding: 10px;
+                font-size: 16px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            #passwordPrompt button {
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 비밀번호 입력 창 -->
+        <div id="passwordPrompt">
+            <input
+                type="password"
+                id="passwordInput"
+                placeholder="비밀번호를 입력하세요"
+            />
+            <button onclick="checkPassword()">로그인</button>
+        </div>
+
+        <!-- 실제 페이지 내용 -->
+        <div id="mainContent" style="display: none">
+            <header>프로젝트 관리 및 댓글 시스템</header>
+
+            <div class="container">
+                <!-- 프로젝트 진척률 섹션 -->
+                <div class="progress-section">
+                    <h2>프로젝트 진척률</h2>
+                    <input
+                        class="project-input-style"
+                        type="text"
+                        id="projectInput"
+                        placeholder="새 프로젝트 추가..."
+                    />
+                    <button onclick="addProject()">프로젝트 추가</button>
+
+                    <div class="project-container" id="projects"></div>
+
+                    <div class="progress-bar-container">
+                        <h3>
+                            전체 진척률: <span id="progressPercentage">0%</span>
+                        </h3>
+                        <div class="progress-bar">
+                            <span id="progressBar" style="width: 0%"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 댓글 작성 섹션 -->
+                <div class="comment-section">
+                    <h2>특이사항 및 댓글</h2>
+                    <textarea
+                        id="commentInput"
+                        placeholder="댓글을 입력하세요..."
+                    ></textarea>
+                    <button onclick="addComment()">댓글 추가</button>
+                    <h3>댓글 목록</h3>
+                    <ul id="commentList"></ul>
+                </div>
+
+                <!-- 초기화 버튼 -->
+                <button class="reset-btn" onclick="resetData()">
+                    데이터 초기화
+                </button>
+            </div>
+        </div>
+
+        <script>
+            const correctPassword = "1234"; // 비밀번호 설정
+
+            // 비밀번호 체크
+            function checkPassword() {
+                const passwordInput =
+                    document.getElementById("passwordInput").value;
+                if (passwordInput === correctPassword) {
+                    document.getElementById("passwordPrompt").style.display =
+                        "none";
+                    document.getElementById("mainContent").style.display =
+                        "block";
+                } else {
+                    alert("비밀번호가 틀렸습니다. 다시 시도하세요.");
+                }
+            }
+
+            // 댓글 기능
+            window.onload = function () {
+                displayComments();
+                loadProjects(); // 페이지가 로드될 때 프로젝트 데이터를 불러옵니다.
+            };
+
+            function addComment() {
+                const commentInput = document.getElementById("commentInput");
+                const comment = commentInput.value.trim();
+                if (comment !== "") {
+                    let comments =
+                        JSON.parse(localStorage.getItem("comments")) || [];
+                    comments.push(comment);
+                    localStorage.setItem("comments", JSON.stringify(comments));
+                    displayComments();
+                }
+                commentInput.value = "";
+            }
+
+            function displayComments() {
+                const commentList = document.getElementById("commentList");
+                commentList.innerHTML = "";
+                const comments =
+                    JSON.parse(localStorage.getItem("comments")) || [];
+                comments.forEach((comment, index) => {
+                    const li = document.createElement("li");
+                    li.textContent = comment;
+
+                    // "X" 삭제 버튼 추가
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "X";
+                    deleteButton.onclick = function () {
+                        deleteComment(index);
+                    };
+
+                    li.appendChild(deleteButton);
+                    commentList.appendChild(li);
+                });
+            }
+
+            function deleteComment(index) {
+                let comments =
+                    JSON.parse(localStorage.getItem("comments")) || [];
+                comments.splice(index, 1); // 댓글 삭제
+                localStorage.setItem("comments", JSON.stringify(comments));
+                displayComments();
+            }
+
+            // 프로젝트 진척률 기능
+            let projects = [];
+
+            function addProject() {
+                const projectInput = document.getElementById("projectInput");
+                const projectName = projectInput.value.trim();
+                if (projectName !== "") {
+                    // 새 프로젝트 추가, 기본으로 빈 체크리스트 항목을 추가
+                    const newProject = {
+                        name: projectName,
+                        tasks: [{ name: "Finished", completed: false }],
+                    };
+                    projects.push(newProject);
+                    projectInput.value = "";
+                    saveProjects(); // 프로젝트 데이터를 localStorage에 저장
+                    displayProjects();
+                    updateOverallProgress();
+                }
+            }
+
+            function saveProjects() {
+                localStorage.setItem("projects", JSON.stringify(projects));
+            }
+
+            function loadProjects() {
+                const savedProjects = localStorage.getItem("projects");
+                if (savedProjects) {
+                    projects = JSON.parse(savedProjects);
+                    displayProjects();
+                    updateOverallProgress();
+                }
+            }
+
+            function displayProjects() {
+                const projectContainer = document.getElementById("projects");
+                projectContainer.innerHTML = "";
+                projects.forEach((project, index) => {
+                    const projectDiv = document.createElement("div");
+                    projectDiv.classList.add("project");
+                    projectDiv.innerHTML = `<div class="project-name">${project.name}</div>`;
+
+                    project.tasks.forEach((task, taskIndex) => {
+                        const checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.checked = task.completed;
+                        checkbox.onclick = function () {
+                            task.completed = checkbox.checked;
+                            saveProjects(); // 체크박스를 클릭할 때마다 프로젝트 데이터를 저장
+                            updateOverallProgress();
+                        };
+
+                        const taskLabel = document.createElement("label");
+                        taskLabel.classList.add("task-item");
+                        taskLabel.appendChild(checkbox);
+                        taskLabel.appendChild(
+                            document.createTextNode(task.name)
+                        );
+
+                        // "X" 삭제 버튼 추가
+                        const deleteButton = document.createElement("button");
+                        deleteButton.textContent = "X";
+                        deleteButton.onclick = function () {
+                            deleteTask(index, taskIndex);
+                        };
+
+                        taskLabel.appendChild(deleteButton);
+                        projectDiv.appendChild(taskLabel);
+                    });
+
+                    projectContainer.appendChild(projectDiv);
+                });
+            }
+
+            function deleteTask(projectIndex, taskIndex) {
+                projects[projectIndex].tasks.splice(taskIndex, 1); // 태스크 삭제
+                saveProjects();
+                displayProjects();
+                updateOverallProgress();
+            }
+
+            function updateOverallProgress() {
+                let totalTasks = 0;
+                let completedTasks = 0;
+
+                // 모든 프로젝트의 태스크를 순회하면서 진척률을 계산
+                projects.forEach((project) => {
+                    project.tasks.forEach((task) => {
+                        totalTasks++;
+                        if (task.completed) completedTasks++;
+                    });
+                });
+
+                // 전체 진척률 계산
+                const progress =
+                    totalTasks > 0
+                        ? Math.round((completedTasks / totalTasks) * 100)
+                        : 0;
+                document.getElementById(
+                    "progressPercentage"
+                ).textContent = `${progress}%`;
+                document.getElementById(
+                    "progressBar"
+                ).style.width = `${progress}%`;
+            }
+
+            // 데이터 초기화 기능
+            function resetData() {
+                localStorage.clear(); // 모든 localStorage 데이터 삭제
+                projects = []; // 프로젝트 배열 초기화
+                displayComments(); // 댓글 목록 초기화
+                displayProjects(); // 프로젝트 목록 초기화
+                updateOverallProgress(); // 진척률 초기화
+            }
+        </script>
+    </body>
+</html>
