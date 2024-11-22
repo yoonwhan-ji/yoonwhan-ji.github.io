@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>프로젝트 관리 및 댓글</title>
+        <title>프로젝트 관리 및 댓글 시스템</title>
         <style>
+            /* 기존 CSS 스타일 유지 */
             body {
                 font-family: "Arial", sans-serif;
                 background-color: #f4f4f9;
@@ -205,13 +206,11 @@
         <!-- 실제 페이지 내용 -->
         <div id="mainContent" style="display: none">
             <header>프로젝트 관리 및 댓글 시스템</header>
-
             <div class="container">
                 <!-- 프로젝트 진척률 섹션 -->
                 <div class="progress-section">
                     <h2>프로젝트 진척률</h2>
                     <input
-                        class="project-input-style"
                         type="text"
                         id="projectInput"
                         placeholder="새 프로젝트 추가..."
@@ -251,6 +250,12 @@
 
         <script>
             const correctPassword = "1234"; // 비밀번호 설정
+            const repoOwner = "your-username"; // GitHub 사용자명
+            const repoName = "your-repository"; // GitHub 저장소명
+            const commentsFile = "comments.json";
+            const projectsFile = "projects.json";
+
+            const token = "your-github-token"; // GitHub Personal Access Token (수정 필요)
 
             // 비밀번호 체크
             function checkPassword() {
@@ -266,129 +271,218 @@
                 }
             }
 
-            // 댓글 기능
-            window.onload = function () {
-                displayComments();
-                loadProjects(); // 페이지가 로드될 때 프로젝트 데이터를 불러옵니다.
-            };
-
+            // 댓글 추가
             function addComment() {
                 const commentInput = document.getElementById("commentInput");
                 const comment = commentInput.value.trim();
                 if (comment !== "") {
-                    let comments =
-                        JSON.parse(localStorage.getItem("comments")) || [];
-                    comments.push(comment);
-                    localStorage.setItem("comments", JSON.stringify(comments));
-                    displayComments();
+                    fetch(
+                        `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${commentsFile}`,
+                        {
+                            method: "GET",
+                            headers: {
+                                Authorization: `token ${token}`,
+                            },
+                        }
+                    )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            let comments = [];
+                            if (data.content) {
+                                comments = JSON.parse(atob(data.content)); // base64로 인코딩된 내용
+                            }
+                            comments.push({
+                                user: "Anonymous",
+                                comment: comment,
+                            });
+                            const encodedData = btoa(JSON.stringify(comments)); // base64로 인코딩
+                            return fetch(
+                                `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${commentsFile}`,
+                                {
+                                    method: "PUT",
+                                    headers: {
+                                        Authorization: `token ${token}`,
+                                    },
+                                    body: JSON.stringify({
+                                        message: "Add comment",
+                                        content: encodedData,
+                                    }),
+                                }
+                            );
+                        })
+                        .then(() => {
+                            displayComments();
+                        });
                 }
                 commentInput.value = "";
             }
 
             function displayComments() {
-                const commentList = document.getElementById("commentList");
-                commentList.innerHTML = "";
-                const comments =
-                    JSON.parse(localStorage.getItem("comments")) || [];
-                comments.forEach((comment, index) => {
-                    const li = document.createElement("li");
-                    li.textContent = comment;
-
-                    // "X" 삭제 버튼 추가
-                    const deleteButton = document.createElement("button");
-                    deleteButton.textContent = "X";
-                    deleteButton.onclick = function () {
-                        deleteComment(index);
-                    };
-
-                    li.appendChild(deleteButton);
-                    commentList.appendChild(li);
-                });
+                fetch(
+                    `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${commentsFile}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `token ${token}`,
+                        },
+                    }
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const commentList =
+                            document.getElementById("commentList");
+                        commentList.innerHTML = "";
+                        const comments = data.content
+                            ? JSON.parse(atob(data.content))
+                            : [];
+                        comments.forEach((comment, index) => {
+                            const li = document.createElement("li");
+                            li.textContent = comment.comment;
+                            const deleteButton =
+                                document.createElement("button");
+                            deleteButton.textContent = "X";
+                            deleteButton.onclick = function () {
+                                deleteComment(index);
+                            };
+                            li.appendChild(deleteButton);
+                            commentList.appendChild(li);
+                        });
+                    });
             }
 
+            // 댓글 삭제
             function deleteComment(index) {
-                let comments =
-                    JSON.parse(localStorage.getItem("comments")) || [];
-                comments.splice(index, 1); // 댓글 삭제
-                localStorage.setItem("comments", JSON.stringify(comments));
-                displayComments();
+                fetch(
+                    `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${commentsFile}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `token ${token}`,
+                        },
+                    }
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        let comments = [];
+                        if (data.content) {
+                            comments = JSON.parse(atob(data.content));
+                        }
+                        comments.splice(index, 1); // 댓글 삭제
+                        const encodedData = btoa(JSON.stringify(comments)); // base64로 인코딩
+                        return fetch(
+                            `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${commentsFile}`,
+                            {
+                                method: "PUT",
+                                headers: {
+                                    Authorization: `token ${token}`,
+                                },
+                                body: JSON.stringify({
+                                    message: "Delete comment",
+                                    content: encodedData,
+                                }),
+                            }
+                        );
+                    })
+                    .then(() => {
+                        displayComments();
+                    });
             }
 
-            // 프로젝트 진척률 기능
+            // 프로젝트 관리 기능
             let projects = [];
-
             function addProject() {
                 const projectInput = document.getElementById("projectInput");
                 const projectName = projectInput.value.trim();
                 if (projectName !== "") {
-                    // 새 프로젝트 추가, 기본으로 빈 체크리스트 항목을 추가
                     const newProject = {
                         name: projectName,
                         tasks: [{ name: "Finished", completed: false }],
                     };
                     projects.push(newProject);
                     projectInput.value = "";
-                    saveProjects(); // 프로젝트 데이터를 localStorage에 저장
+                    saveProjects();
                     displayProjects();
                     updateOverallProgress();
                 }
             }
 
             function saveProjects() {
-                localStorage.setItem("projects", JSON.stringify(projects));
-            }
-
-            function loadProjects() {
-                const savedProjects = localStorage.getItem("projects");
-                if (savedProjects) {
-                    projects = JSON.parse(savedProjects);
-                    displayProjects();
-                    updateOverallProgress();
-                }
+                const encodedData = btoa(JSON.stringify(projects));
+                fetch(
+                    `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${projectsFile}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `token ${token}`,
+                        },
+                        body: JSON.stringify({
+                            message: "Add project",
+                            content: encodedData,
+                        }),
+                    }
+                );
             }
 
             function displayProjects() {
-                const projectContainer = document.getElementById("projects");
-                projectContainer.innerHTML = "";
-                projects.forEach((project, index) => {
-                    const projectDiv = document.createElement("div");
-                    projectDiv.classList.add("project");
-                    projectDiv.innerHTML = `<div class="project-name">${project.name}</div>`;
+                fetch(
+                    `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${projectsFile}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `token ${token}`,
+                        },
+                    }
+                )
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const projectContainer =
+                            document.getElementById("projects");
+                        projectContainer.innerHTML = "";
+                        const loadedProjects = data.content
+                            ? JSON.parse(atob(data.content))
+                            : [];
+                        loadedProjects.forEach((project, index) => {
+                            const projectDiv = document.createElement("div");
+                            projectDiv.classList.add("project");
+                            projectDiv.innerHTML = `<div class="project-name">${project.name}</div>`;
 
-                    project.tasks.forEach((task, taskIndex) => {
-                        const checkbox = document.createElement("input");
-                        checkbox.type = "checkbox";
-                        checkbox.checked = task.completed;
-                        checkbox.onclick = function () {
-                            task.completed = checkbox.checked;
-                            saveProjects(); // 체크박스를 클릭할 때마다 프로젝트 데이터를 저장
-                            updateOverallProgress();
-                        };
+                            project.tasks.forEach((task, taskIndex) => {
+                                const checkbox =
+                                    document.createElement("input");
+                                checkbox.type = "checkbox";
+                                checkbox.checked = task.completed;
+                                checkbox.onclick = function () {
+                                    task.completed = checkbox.checked;
+                                    saveProjects();
+                                    updateOverallProgress();
+                                };
 
-                        const taskLabel = document.createElement("label");
-                        taskLabel.classList.add("task-item");
-                        taskLabel.appendChild(checkbox);
-                        taskLabel.appendChild(
-                            document.createTextNode(task.name)
-                        );
+                                const taskLabel =
+                                    document.createElement("label");
+                                taskLabel.classList.add("task-item");
+                                taskLabel.appendChild(checkbox);
+                                taskLabel.appendChild(
+                                    document.createTextNode(task.name)
+                                );
 
-                        // "X" 삭제 버튼 추가
-                        const deleteButton = document.createElement("button");
-                        deleteButton.textContent = "X";
-                        deleteButton.onclick = function () {
-                            deleteTask(index, taskIndex);
-                        };
+                                const deleteButton =
+                                    document.createElement("button");
+                                deleteButton.textContent = "X";
+                                deleteButton.onclick = function () {
+                                    deleteTask(index, taskIndex);
+                                };
 
-                        taskLabel.appendChild(deleteButton);
-                        projectDiv.appendChild(taskLabel);
+                                taskLabel.appendChild(deleteButton);
+                                projectDiv.appendChild(taskLabel);
+                            });
+
+                            projectContainer.appendChild(projectDiv);
+                        });
                     });
-
-                    projectContainer.appendChild(projectDiv);
-                });
             }
 
             function deleteTask(projectIndex, taskIndex) {
-                projects[projectIndex].tasks.splice(taskIndex, 1); // 태스크 삭제
+                projects[projectIndex].tasks.splice(taskIndex, 1);
                 saveProjects();
                 displayProjects();
                 updateOverallProgress();
@@ -397,16 +491,12 @@
             function updateOverallProgress() {
                 let totalTasks = 0;
                 let completedTasks = 0;
-
-                // 모든 프로젝트의 태스크를 순회하면서 진척률을 계산
                 projects.forEach((project) => {
                     project.tasks.forEach((task) => {
                         totalTasks++;
                         if (task.completed) completedTasks++;
                     });
                 });
-
-                // 전체 진척률 계산
                 const progress =
                     totalTasks > 0
                         ? Math.round((completedTasks / totalTasks) * 100)
@@ -419,14 +509,45 @@
                 ).style.width = `${progress}%`;
             }
 
-            // 데이터 초기화 기능
             function resetData() {
-                localStorage.clear(); // 모든 localStorage 데이터 삭제
-                projects = []; // 프로젝트 배열 초기화
-                displayComments(); // 댓글 목록 초기화
-                displayProjects(); // 프로젝트 목록 초기화
-                updateOverallProgress(); // 진척률 초기화
+                // GitHub API로 초기화
+                fetch(
+                    `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${projectsFile}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `token ${token}`,
+                        },
+                        body: JSON.stringify({
+                            message: "Reset projects",
+                            content: btoa("[]"),
+                        }),
+                    }
+                );
+                fetch(
+                    `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${commentsFile}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `token ${token}`,
+                        },
+                        body: JSON.stringify({
+                            message: "Reset comments",
+                            content: btoa("[]"),
+                        }),
+                    }
+                );
+                projects = [];
+                displayProjects();
+                displayComments();
+                updateOverallProgress();
             }
+
+            // 페이지 로드 시 기능
+            window.onload = function () {
+                displayComments();
+                displayProjects();
+            };
         </script>
     </body>
 </html>
