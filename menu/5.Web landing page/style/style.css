@@ -1,0 +1,338 @@
+/* common css */
+/* 스크롤 비헤이비어 스무스 ~ 부드럽게 이동하는 기능이다 */
+.fade-in {
+    opacity: 0; /* 초기에는 숨겨짐 */
+    animation: fadeInEffect 2s forwards; /* 2초 동안 서서히 나타남 */
+}
+
+@keyframes fadeInEffect {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+}
+* {
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+img {
+    width: 100%;
+    vertical-align: top;
+}
+
+/*inline-block 은 inline 요소의 width, height 값 조절을 위해, position:absolute 는 노멀 플로우에서 요소의 위치를 지우기 위해*/
+.a11y {
+    display: inline-block;
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    clip-path: inset(50%);
+}
+/* 엑세스 빌리티 접근성 강화 */
+
+/* 공통 주황 버튼 */
+.btn-common {
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: #d97652;
+    border-radius: 40px;
+    color: #fff;
+}
+
+/* 기본세팅 종료*/
+/* 추가세팅 시작 */
+
+header {
+    display: flex;
+    height: 902px;
+    flex-direction: column;
+    background-color: #f2e9d8;
+}
+
+.box-navi {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav > ul {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.box-headerinfo {
+    background: url(../images/img_hodu_header.png) bottom right no-repeat;
+    height: 800px;
+    margin: 0 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.box-headerinfo > .text-header-title {
+    font-size: 48px;
+    line-height: 60px;
+    font-weight: 700;
+}
+.box-headerinfo > .txt-header {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+/* 헤드 스타일 완료  */
+/* 메인 탑 시작 */
+.cont-main {
+    display: flex;
+    flex-direction: column;
+    max-width: 1280px;
+    margin: 80px auto 0;
+}
+
+.cont-main .main-intro figure {
+    display: flex;
+    align-items: center;
+    gap: 110px;
+}
+.cont-main .main-intro img {
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 25);
+    border-radius: 30px;
+}
+
+.main-intro figcaption h2 {
+    font-size: 36px;
+    line-height: 45px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.main-intro figcaption p {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+/* 메인탑 종료 */
+/* 메인중간 시작  */
+
+.cont-main .main-photos {
+    margin: 120px 0 68px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.main-photos .txt-photos-title {
+    font-size: 48px;
+    line-height: 60px;
+    margin-bottom: 40px;
+    font-weight: 700;
+    color: #d97652;
+    text-align: center;
+}
+
+.main-photos .txt-photos {
+    text-align: center;
+}
+
+.main-photos .txt-photos strong {
+    color: #d97652;
+}
+
+.main-photos .list-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 88px 0 100px;
+    gap: 72px;
+}
+
+.main-photos .list-photos button {
+    overflow: hidden;
+    border-radius: 30px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 25);
+}
+
+.main-photos .box-extends {
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 50px;
+}
+
+.main-photos .box-extends .txt-info {
+    margin-bottom: 40px;
+}
+
+.cont-main .main-map {
+    margin: 68px 0 80px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.main-map h2 {
+    font-size: 36px;
+    line-height: 45px;
+    margin-bottom: 20px;
+}
+.main-map address {
+    margin-bottom: 40px;
+    font-style: normal;
+    color: #606367;
+}
+
+#map {
+    height: 520px;
+    background-color: black;
+    border-radius: 12px;
+}
+
+.widget-subscribe {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 58px;
+    background-color: #263140;
+    border-radius: 30px;
+    color: white;
+}
+
+.widget-subscribe h3 {
+    font-size: 36px;
+    line-height: 45px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.widget-subscribe p {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.widget-subscribe .form-subscribe {
+    position: relative;
+    width: 530px;
+}
+
+.widget-subscribe .form-subscribe::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 30px;
+    width: 24px;
+    height: 24px;
+    background: url(../images/icon_mail.png);
+    z-index: 1;
+}
+
+.widget-subscribe .form-subscribe input {
+    position: relative;
+    width: 100%;
+    padding: 20px 135px 20px 68px;
+    overflow: hidden;
+    border-radius: 60px;
+    border: none;
+    box-sizing: border-box;
+}
+.widget-subscribe .form-subscribe .btn-common {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+}
+/* 메인중간 종료  */
+/* 푸터시작 */
+.cont-footer::before {
+    content: "";
+    display: block;
+    background: url(..//images/bg_footer.jpeg) center/cover no-repeat;
+
+    /* 센터 / 커버 기억하자 */
+    width: 100%;
+    height: 340px;
+    margin-top: -100px;
+}
+/* 푸터종료 */
+
+.cont-footer .box-footer {
+    max-width: 1280px;
+    padding: 45px 0px;
+    margin: 0 auto;
+}
+
+.cont-footer .list-link-sns {
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+    transform: translateY(-100%);
+}
+
+#inpEmail {
+    width: 400px;
+}
+
+.cont-footer .list-link-sns a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: url(../images/icon_blog.svg) #f29d52 center no-repeat;
+}
+
+.cont-footer .list-link-sns .link-insta {
+    background-image: url(../images/icon_insta.svg);
+}
+
+.cont-footer .list-link-sns .link-facebook {
+    background-image: url(../images/icon_facebook.svg);
+}
+
+.cont-footer .list-link-sns .link-youtube {
+    background-image: url(../images/icon_youtube.svg);
+}
+
+/* 유틸리티? */
+/* 올라가기 기능 */
+.link-top {
+    position: fixed;
+    bottom: 184px;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #c4c4c4;
+    background-color: #263140;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    background: url(../images/icon_arrow_up_normal.svg) white center no-repeat;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HELLO-WORLD</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css?family=Amatic+SC");
+
+            body {
+                margin: 0;
+                height: 100%;
+                background-image: linear-gradient(
+                    to top,
+                    #d9afd9 0%,
+                    #97d9e1 100%
+                );
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
+                opacity: 0; /* 초기 상태에서 보이지 않도록 설정 */
+                animation: fadeIn 2s forwards; /* Fade-in 애니메이션 */
+            }
+
+            .button_container {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 30%;
+                text-align: center;
+            }
+
+            .description {
+                font-family: "Amatic SC", cursive;
+                font-size: 35px;
+            }
+
+            .btn {
+                border: none;
+                display: inline-block;
+                cursor: pointer;
+                text-transform: uppercase;
+                outline: none;
+                overflow: hidden;
+                position: relative;
+                color: #fff;
+                font-weight: 700;
+                font-size: 15px;
+                background-color: #222;
+                padding: 17px 60px;
+                margin: 0 auto;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                transition: transform 0.5s ease-in-out; /* 줌인 애니메이션 시간 */
+            }
+
+            .btn span {
+                position: relative;
+                z-index: 1;
+            }
+
+            .btn:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 490%;
+                width: 140%;
+                background: #78c7d2;
+                -webkit-transition: all 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
+                -webkit-transform: translateX(-98%) translateY(-25%)
+                    rotate(45deg);
+                transform: translateX(-98%) translateY(-25%) rotate(45deg);
+            }
+
+            .btn:hover:after {
+                -webkit-transform: translateX(-9%) translateY(-25%)
+                    rotate(45deg);
+                transform: translateX(-9%) translateY(-25%) rotate(45deg);
+            }
+
+            .btn:hover {
+                transform: scale(1.2); /* 버튼이 호버될 때 줌인 효과 */
+            }
+
+            .link {
+                font-size: 20px;
+                margin-top: 30px;
+            }
+
+            .link a {
+                color: #000;
+                font-size: 25px;
+            }
+
+            /* Fade-in 애니메이션 정의 */
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="button_container">
+            <p class="description">"hello-world!! i'm-yoonwhan"</p>
+            <button class="btn" onclick="zoomAndRedirect()">
+                <span>Hover me!</span>
+            </button>
+        </div>
+
+        <script>
+            function zoomAndRedirect() {
+                // 페이지에 페이드 아웃 효과를 주기 위해 body의 opacity를 변경
+                document.body.style.opacity = "0"; // 페이지를 서서히 사라지게 함
+
+                // 버튼에 줌인 애니메이션 추가
+                const btn = document.querySelector(".btn");
+                btn.style.transform = "scale(1.2)"; // 줌인 효과
+
+                // 애니메이션 후 페이지 이동 (0.5초 후)
+                setTimeout(function () {
+                    // 페이지 이동
+                    window.location.href = "menu/2.menu.html"; // 이동할 페이지
+                }, 500); // 0.5초 후 페이지 이동 (애니메이션 효과 끝날 때까지 기다림)
+            }
+        </script>
+    </body>
+</html>

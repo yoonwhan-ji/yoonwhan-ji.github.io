@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>3D 금속 구체</title>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+                font-family: Arial, sans-serif;
+                opacity: 0; /* 초기 opacity 값 설정 */
+                transition: opacity 2s ease-in-out; /* 서서히 나타나는 효과 */
+                background-image: linear-gradient(
+                    to top,
+                    #d9afd9 0%,
+                    #97d9e1 100%
+                );
+            }
+            canvas {
+                display: block;
+            }
+            /* 하단에 깜빡이는 텍스트 스타일 */
+            .flicker-text {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 24px;
+                color: white;
+                opacity: 0.5;
+                animation: flicker 1.5s infinite;
+            }
+
+            /* 깜빡이는 효과 */
+            @keyframes flicker {
+                0% {
+                    opacity: 0.3;
+                }
+                50% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0.3;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script>
+            // 씬, 카메라, 렌더러 설정
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(
+                75,
+                window.innerWidth / window.innerHeight,
+                0.1,
+                1000
+            );
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // 배경 색상 설정 (어두운 우주)
+            scene.background = new THREE.Color(0x000000);
+
+            // 별 만들기: 깜빡이는 효과를 추가
+            function createStars() {
+                const starGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+                const starMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xffffff,
+                    emissive: 0xffffff,
+                    emissiveIntensity: Math.random() * 0.5 + 0.5, // 각 별마다 다른 밝기
+                });
+
+                for (let i = 0; i < 5000; i++) {
+                    const star = new THREE.Mesh(starGeometry, starMaterial);
+                    const [x, y, z] = Array(3)
+                        .fill()
+                        .map(() => (Math.random() - 0.5) * 2000);
+                    star.position.set(x, y, z);
+                    scene.add(star);
+                }
+            }
+            createStars();
+
+            // 환경 맵 로드 (금속 반사 효과를 위한)
+            const cubeTextureLoader = new THREE.CubeTextureLoader();
+            const envMap = cubeTextureLoader.load([
+                "https://threejs.org/examples/textures/cube/skybox/px.png",
+                "https://threejs.org/examples/textures/cube/skybox/nx.png",
+                "https://threejs.org/examples/textures/cube/skybox/py.png",
+                "https://threejs.org/examples/textures/cube/skybox/ny.png",
+                "https://threejs.org/examples/textures/cube/skybox/pz.png",
+                "https://threejs.org/examples/textures/cube/skybox/nz.png",
+            ]);
+
+            // 금속성 구체 (구체 형태)
+            const planetGeometry = new THREE.SphereGeometry(6, 64, 64); // 세부적인 텍스처를 위해 더 세밀한 구체 사용
+            const planetMaterial = new THREE.MeshStandardMaterial({
+                color: 0x87ceeb, // 금속 느낌을 위한 하늘색
+                metalness: 0.9, // 금속성 강하게
+                roughness: 0.3, // 표면 약간 매끄럽게
+                envMap: envMap, // 환경 맵을 통한 반사 효과
+                emissive: 0x444444, // 약간의 발광 효과 추가
+                emissiveIntensity: 0.1, // 발광 효과의 밝기
+            });
+            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+            scene.add(planet); // 행성은 고정된 위치에 배치됨
+
+            // 카메라 위치 설정
+            camera.position.z = 50;
+
+            // 빛 (포인트 라이트로 별처럼)
+            const pointLight = new THREE.PointLight(0x00ffff, 18, 888); // 포인트 라이트의 강도 줄임
+            pointLight.position.set(50, 50, -50); // 포인트라이트의 위치를 설정
+            scene.add(pointLight);
+
+            // 앰비언트 라이트 (전반적인 환경 조명, 강도 줄임)
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.2); // 은은한 배경광
+            scene.add(ambientLight);
+
+            // 마우스 클릭으로 카메라 이동 (카메라 움직임을 위한 변수)
+            let isMouseDown = false;
+            let prevMouseX = 0;
+            let prevMouseY = 0;
+
+            // 마우스 클릭 이벤트
+            window.addEventListener("mousedown", (event) => {
+                isMouseDown = true;
+                prevMouseX = event.clientX;
+                prevMouseY = event.clientY;
+            });
+
+            // 마우스 이동 이벤트
+            window.addEventListener("mousemove", (event) => {
+                if (isMouseDown) {
+                    const deltaX = (event.clientX - prevMouseX) * 0.005;
+                    const deltaY = (event.clientY - prevMouseY) * 0.005;
+
+                    camera.rotation.y -= deltaX; // 좌우 회전
+                    camera.rotation.x -= deltaY; // 상하 회전
+
+                    prevMouseX = event.clientX;
+                    prevMouseY = event.clientY;
+                }
+            });
+
+            // 마우스 떼기 이벤트
+            window.addEventListener("mouseup", () => {
+                isMouseDown = false;
+            });
+
+            // 키보드 이동 (W, A, S, D, 방향키)
+            const moveSpeed = 1;
+            const velocity = new THREE.Vector3();
+
+            window.addEventListener("keydown", (event) => {
+                switch (event.key) {
+                    case "w":
+                    case "ArrowUp":
+                        velocity.z = -moveSpeed;
+                        break;
+                    case "s":
+                    case "ArrowDown":
+                        velocity.z = moveSpeed;
+                        break;
+                    case "a":
+                    case "ArrowLeft":
+                        velocity.x = -moveSpeed;
+                        break;
+                    case "d":
+                    case "ArrowRight":
+                        velocity.x = moveSpeed;
+                        break;
+                }
+            });
+
+            // 키보드 떼기 이벤트
+            window.addEventListener("keyup", (event) => {
+                if (
+                    [
+                        "w",
+                        "s",
+                        "a",
+                        "d",
+                        "ArrowUp",
+                        "ArrowDown",
+                        "ArrowLeft",
+                        "ArrowRight",
+                    ].includes(event.key)
+                ) {
+                    velocity.set(0, 0, 0); // 이동 멈추기
+                }
+            });
+
+            // 창 크기 변경 시 처리
+            window.addEventListener("resize", () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+
+            // 애니메이션 루프
+            let moveDirection = 0.1; // X축으로 이동하는 속도
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // 카메라 이동 (키보드 이동에 의한)
+                camera.position.add(velocity);
+
+                // 행성 회전 (행성이 자전하는 효과)
+                planet.rotation.y += 0.01;
+
+                // 행성 X축으로 이동 (움직이게 만들기)
+                planet.position.x += moveDirection;
+                // X축 끝에 도달하면 방향 반전
+                if (planet.position.x > 30 || planet.position.x < -30) {
+                    moveDirection = -moveDirection;
+                }
+
+                // 별의 밝기 변동 (깜빡이는 효과)
+                scene.children.forEach((child) => {
+                    if (child.isMesh && child.material.emissive) {
+                        // 행성 구체는 깜빡이지 않도록 제외
+                        if (child !== planet) {
+                            child.material.emissiveIntensity =
+                                Math.random() * 0.5 + 0.5;
+                        }
+                    }
+                });
+
+                // 조명(포인트라이트)을 회전시키는 효과
+                const time = Date.now() * 0.0005; // 시간에 따라 조명이 회전
+                pointLight.position.x = Math.sin(time) * 50;
+                pointLight.position.z = Math.cos(time) * 50;
+
+                // 렌더링
+                renderer.render(scene, camera);
+            }
+
+            // 페이지 로드 후 fade-in 효과를 추가
+            window.onload = () => {
+                document.body.style.opacity = 1; // 페이지가 로드된 후 opacity를 1로 변경
+            };
+
+            animate();
+        </script>
+
+        <!-- 하단에 깜빡이는 텍스트 추가 -->
+        <div class="flicker-text">mouse control and keyboard</div>
+        <audio autoplay loop>
+            <source src="../asset/univers.mp3" type="audio/mp3" />
+        </audio>
+    </body>
+</html>

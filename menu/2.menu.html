@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TOY-STORY</title>
+        <style>
+            html {
+                background-image: linear-gradient(
+                    to top,
+                    #d9afd9 0%,
+                    #97d9e1 100%
+                );
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
+                height: 100%;
+            }
+
+            /* 전체 페이지에 대한 fade-in 애니메이션 */
+            body {
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start; /* 상단 정렬 */
+                align-items: center;
+                height: 100%;
+                text-align: center;
+                opacity: 0;
+                animation: fadeIn 2s forwards; /* 전체 페이지 fade-in 효과 */
+            }
+
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            h1 {
+                font-family: Helvetica, sans-serif;
+                color: white;
+                font-weight: 100;
+                font-size: 2em;
+                margin-top: 3em; /* 화면 상단 여백 */
+                margin-bottom: 50px; /* 텍스트와 버튼 간의 여백 */
+                opacity: 0;
+                animation: fadeInText 2s forwards 0.5s; /* 텍스트 fade-in 효과 */
+            }
+
+            @keyframes fadeInText {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            /* 버튼들을 세로로 나열 */
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 80vw;
+                margin: 0 auto;
+                min-height: 60vh;
+            }
+
+            .btn {
+                display: inline-block;
+                margin: 10px;
+                padding: 20px 40px;
+                font-size: 1.2em;
+                text-transform: uppercase;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 10px;
+                box-shadow: 0 0 20px #eee;
+                transition: background-position 0.5s ease;
+                background-size: 200% auto;
+                opacity: 0;
+                animation: fadeInBtn 2s forwards 1s; /* 각 버튼 fade-in 효과 */
+            }
+
+            @keyframes fadeInBtn {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            /* 각 버튼에 배경 색상 및 그라디언트 효과 추가 */
+            .btn:hover {
+                background-position: right center;
+            }
+
+            .btn-1 {
+                background-image: linear-gradient(
+                    to right,
+                    #f6d365 0%,
+                    #fda085 51%,
+                    #f6d365 100%
+                );
+            }
+
+            .btn-2 {
+                background-image: linear-gradient(
+                    to right,
+                    #fbc2eb 0%,
+                    #a6c1ee 51%,
+                    #fbc2eb 100%
+                );
+            }
+
+            .btn-3 {
+                background-image: linear-gradient(
+                    to right,
+                    #84fab0 0%,
+                    #8fd3f4 51%,
+                    #84fab0 100%
+                );
+            }
+
+            .btn-4 {
+                background-image: linear-gradient(
+                    to right,
+                    #a1c4fd 0%,
+                    #c2e9fb 51%,
+                    #a1c4fd 100%
+                );
+            }
+
+            .btn-5 {
+                background-image: linear-gradient(
+                    to right,
+                    #ffecd2 0%,
+                    #fcb69f 51%,
+                    #ffecd2 100%
+                );
+            }
+
+            /* 반응형: 모바일 화면에서도 버튼들이 잘 보이도록 설정 */
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 1.5em;
+                }
+
+                .btn {
+                    padding: 15px 30px;
+                    font-size: 1em;
+                }
+            }
+            .btn {
+                margin: 2em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to my toy project</h1>
+        <div class="container">
+            <a class="btn btn-1" href="../menu/3.portfilio.html">Portfolio</a>
+            <a class="btn btn-2" href="./4.Universe_Uranus.html"
+                >Universe_Uranus</a
+            >
+            <a class="btn btn-3" href="../menu/5.Web landing page/index.html"
+                >Web landing page
+            </a>
+            <a class="btn btn-4" href="https://example.com/contact">Contact</a>
+            <a class="btn btn-5" href="https://example.com/other">Other</a>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            /* 전체 페이지가 로드될 때 fade-in 효과를 추가 */
+            body {
+                background-color: black;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                text-align: center;
+                opacity: 0;
+                animation: fadeInBody 2s forwards; /* 페이지 fade-in 효과 */
+            }
+
+            @keyframes fadeInBody {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            /* iframe에 fade-in 효과와 반응형 크기 설정 */
+            iframe {
+                opacity: 0;
+                animation: fadeInIframe 2s forwards 1s; /* iframe fade-in 효과 */
+                border: none;
+                width: 100%;
+                height: 100vh; /* 전체 화면 높이에 맞게 설정 */
+                object-fit: cover; /* 화면 크기에 맞게 콘텐츠 비율 유지 */
+            }
+
+            @keyframes fadeInIframe {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <iframe src="../asset/portfolo.pdf"></iframe>
+    </body>
+</html>
