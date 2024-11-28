@@ -16,9 +16,7 @@
 html {
     scroll-behavior: smooth;
 }
-body {
-    background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
-}
+
 * {
     margin: 0;
     padding: 0;
