@@ -109,7 +109,7 @@
             scene.add(planet); // 행성은 고정된 위치에 배치됨
 
             // 카메라 위치 설정
-            camera.position.z = 50;
+            camera.position.z = 600;
 
             // 빛 (포인트 라이트로 별처럼)
             const pointLight = new THREE.PointLight(0x00ffff, 18, 888); // 포인트 라이트의 강도 줄임
@@ -249,7 +249,7 @@
         </script>
 
         <!-- 하단에 깜빡이는 텍스트 추가 -->
-        <div class="flicker-text">mouse control and keyboard</div>
+        <div class="flicker-text">↑ mouse control and keyboard ↑</div>
         <audio autoplay loop>
             <source src="../asset/univers.mp3" type="audio/mp3" />
         </audio>
