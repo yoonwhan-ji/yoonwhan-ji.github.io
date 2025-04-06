@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <title>DREAME - AI 고객지원 시스템</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
+
+            body {
+                background-color: #0d1117;
+                color: #c9d1d9;
+                font-family: "Fira Code", monospace;
+                padding: 60px 20px;
+                max-width: 960px;
+                margin: auto;
+            }
+
+            h1 {
+                color: #58a6ff;
+                font-size: 2.8rem;
+                margin-bottom: 10px;
+            }
+
+            .badge {
+                display: inline-block;
+                background: #e3b341;
+                color: #000;
+                padding: 3px 10px;
+                font-size: 0.85rem;
+                border-radius: 5px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .internal-box {
+                background-color: #161b22;
+                border: 2px dashed #e3b341;
+                padding: 16px;
+                border-radius: 10px;
+                margin-top: 30px;
+                color: #e3b341;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .accordion {
+                background-color: #161b22;
+                border: 1px solid #30363d;
+                border-radius: 12px;
+                margin-top: 40px;
+                box-shadow: 0 0 10px rgba(20, 20, 20, 0.5);
+                overflow: hidden;
+            }
+
+            .accordion-header {
+                padding: 20px;
+                cursor: pointer;
+                font-size: 1.25rem;
+                color: #79c0ff;
+                border-bottom: 1px solid #30363d;
+                position: relative;
+                background: #161b22;
+            }
+
+            .accordion-header::after {
+                content: "▶";
+                position: absolute;
+                right: 20px;
+                transition: transform 0.2s ease;
+            }
+
+            .accordion-header.active::after {
+                transform: rotate(90deg);
+            }
+
+            .accordion-content {
+                display: none;
+                padding: 24px;
+                background: #0d1117;
+            }
+
+            pre {
+                background-color: #0d1117;
+                padding: 16px;
+                border-radius: 10px;
+                overflow-x: auto;
+                border: 1px solid #30363d;
+                margin-top: 16px;
+            }
+
+            code {
+                color: #dcdcdc;
+                font-size: 0.95rem;
+            }
+
+            a {
+                color: #58a6ff;
+                text-decoration: none;
+                border-bottom: 1px dashed #58a6ff;
+            }
+
+            a:hover {
+                color: #79c0ff;
+                border-bottom: 1px solid #79c0ff;
+            }
+
+            .footer {
+                margin-top: 50px;
+                font-size: 1rem;
+                color: #7ee787;
+                background: #161b22;
+                padding: 20px;
+                border-radius: 10px;
+                border: 1px solid #2ea043;
+                text-align: center;
+            }
+
+            .footer a {
+                font-weight: bold;
+                font-size: 1.1rem;
+            }
+
+            .contact-box {
+                background-color: #2c2f36;
+                border: 1px solid #444c56;
+                border-radius: 10px;
+                margin-top: 40px;
+                padding: 20px;
+                text-align: center;
+                color: #cdd9e5;
+            }
+
+            .contact-box strong {
+                display: block;
+                font-size: 1.1rem;
+                color: #f85149;
+                margin-bottom: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            DREAME GPT 고객지원 시스템 <span class="badge">INTERNAL ONLY</span>
+        </h1>
+
+        <div class="footer">
+            ✅ 사내 전용 데모 👉
+            <a
+                href="https://chat.openai.com/gpts/private/dreame-v1"
+                target="_blank"
+                >DREAME GPT 실행</a
+            >
+        </div>
+
+        <div class="internal-box">
+            🚧 현재 이 페이지는 사내 프로젝트 진행 중인 내부 버전입니다.
+        </div>
+
+        <div class="internal-box">
+            🔐 접근 제한: 인증된 구성원만 열람 가능합니다.
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header">📄 Project – 2025-04-05</div>
+            <div class="accordion-content">
+                <embed
+                    src="/지윤환_포트폴리오 20241126.pdf"
+                    type="application/pdf"
+                    width="100%"
+                    height="600px"
+                    style="border: 1px solid #30363d; border-radius: 10px"
+                />
+                <p style="margin-top: 10px; color: #8b949e">
+                    👉 PDF 파일이 보이지 않으면
+                    <a href="technical_overview.pdf" target="_blank"></a>
+                </p>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header">📦 System Architecture</div>
+            <div class="accordion-content">
+                <pre><code>version: "1.0.3"
+project: "DREAME GPT Internal Support System"
+description: "Enterprise-Grade AI Assistant for Customer Success Teams"
+model: "gpt-4"
+embedding: "text-embedding-3-small (FAISS, cosine)"
+update_cycle: "biweekly"
+auto_fine_tune: true
+feature_flags:
+  - enable_context_memory
+  - smart_routing
+  - fallback_to_legacy
+logging:
+  level: "info"
+  destinations:
+    - cloudwatch
+    - local
+monitoring:
+  stack: 
+    - prometheus
+    - grafana
+    - alertmanager
+integrations:
+  - slack_webhook
+  - notion_sync
+  - jira_ticketing
+  - zendesk_bridge
+auth:
+  token_expiry: "12h"
+  scopes:
+    - read:faq
+    - write:logs
+    - manage:vector_store</code></pre>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-header">⚙️ Live Deployment Guide</div>
+            <div class="accordion-content">
+                <pre><code># 프로덕션 환경 변수 설정
+export DREAME_ENV=production
+export DREAME_API_KEY=$(cat ~/.dreame/token.key)
+source ~/.bash_profile
+
+# 시스템 디렉토리 초기화
+mkdir -p /opt/dreame-gpt/{config,data,logs,tmp,cache}
+
+# 환경 구성 및 데이터 업로드
+cp ./config/system_config.yaml /opt/dreame-gpt/config/
+cp ./data/faq_dataset.xlsx /opt/dreame-gpt/data/
+
+# 벡터DB 리인덱싱 (AI 기억 초기화)
+python3 scripts/init_vector_db.py \
+    --config /opt/dreame-gpt/config/system_config.yaml \
+    --force-reindex \
+    --log-level=DEBUG
+
+# 서비스 재시작
+systemctl daemon-reexec
+systemctl restart dreame-gpt.service
+sleep 2
+systemctl status dreame-gpt.service --no-pager
+
+# 실시간 인퍼런스 로그 모니터링
+tail -n 100 -f /var/log/dreame-gpt/inference.log | grep -iE "inference|latency|warning"
+
+# AI 헬스체크
+curl -s -X GET http://localhost:8080/healthcheck \
+  -H "X-Auth-Token: $DREAME_API_KEY" \
+  | jq .status</code></pre>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <strong>인증되지 않으셨나요?</strong>
+            이 시스템은 오직 승인된 인원만 접근 가능합니다.<br />
+            접근 요청 및 문의는 아래로 연락 주세요 <br />
+            📧 <a href="mailto:yoonwhan0@naver.com">yoonwhan0@naver.com</a
+            ><br />
+            📞 <a href="tel:01058717232">010-5871-7232</a>
+        </div>
+
+        <script>
+            const headers = document.querySelectorAll(".accordion-header");
+            headers.forEach((header) => {
+                header.addEventListener("click", () => {
+                    const content = header.nextElementSibling;
+                    const isOpen = header.classList.contains("active");
+
+                    document
+                        .querySelectorAll(".accordion-header")
+                        .forEach((h) => h.classList.remove("active"));
+                    document
+                        .querySelectorAll(".accordion-content")
+                        .forEach((c) => (c.style.display = "none"));
+
+                    if (!isOpen) {
+                        header.classList.add("active");
+                        content.style.display = "block";
+                    }
+                });
+            });
+
+            const password = prompt("비밀번호를 입력하세요:");
+            if (password !== "dreame123") {
+                document.body.innerHTML =
+                    "<h2 style='color: red; text-align:center; padding-top: 200px;'>🚫 접근이 거부되었습니다. 올바른 비밀번호를 입력하세요.</h2>";
+                throw new Error("Unauthorized access");
+            }
+        </script>
+    </body>
+</html>
+
+<!-- 
+Netlify 또는 Vercel 같은 무료 정적 사이트 호스팅을 사용
+비밀번호 보호 기능이 내장되어 있거나, 간단한 Auth 연동 가능
+또는 로그인 기능 있는 SaaS 사용 (ex. Firebase Auth + Hosting)
+🔐 예: Netlify에 배포 + Basic Auth
+사이트 루트에 _headers 파일 추가
+
+txt
+복사
+편집
+/* 
+  Basic-Auth: dreame dreame123
+Netlify에 배포하면, 사용자에게 아이디/비번 입력창 뜸
+
+(아이디: dreame, 비번: dreame123)
+
+🙋 요약하자면:
+GitHub Pages는 보안용으로 x
+
+정식 배포하려면 Netlify, Vercel, Firebase Hosting 등 사용
+
+
+
+1단계: Netlify 가입 및 GitHub 연동
+Netlify 사이트 접속
+
+Sign up → GitHub 계정으로 로그인
+
+로그인 후 "Import from Git" 선택
+
+GitHub에서 지금 쓰는 저장소 선택
+
+기본 설정 그대로 두고 "Deploy site" 클릭
+👉 배포 끝나면 https://your-site-name.netlify.app 주소 생성됨
+
+🛡 2단계: 비밀번호 걸기 (Basic Auth)
+GitHub 저장소 루트에 _headers 파일 추가
+
+내용은 이렇게 작성:
+
+txt
+복사
+편집
+/* 
+  Basic-Auth: dreame dreame123
+dreame는 ID, dreame123는 비밀번호
+
+커밋 & 푸시
+
+bash
+복사
+편집
+git add _headers
+git commit -m "Add Basic Auth headers"
+git push
+Netlify가 자동으로 재배포함
+
+
+makefile
+복사
+편집
+Authentication Required
+Username: dreame
+Password: dreame123
+ Netlify 서버가 처리-->
