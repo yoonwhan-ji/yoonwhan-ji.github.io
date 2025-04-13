@@ -220,10 +220,10 @@
             <div class="footer blink">
                 ✅ 사내 전용 데모 👉
                 <a
-                    href="https://chat.openai.com/gpts/private/dreame-v1"
+                    href="https://chat.openai.com/gpts/private/고객센터-v1"
                     target="_blank"
                 >
-                    DREAME GPT 실행
+                    고객센터 GPT 실행
                 </a>
             </div>
 
@@ -235,6 +235,60 @@
             </div>
 
             <!-- Accordion Panels -->
+
+            <div class="accordion">
+                <div class="accordion-header">프로젝트 추진 배경 및 의의</div>
+                <div class="accordion-content">
+                    <div
+                        style="
+                            padding: 1rem;
+                            line-height: 1.8;
+                            font-size: 0.95rem;
+                            color: #d1d5db;
+                        "
+                    >
+                        <p>
+                            오늘날 고객센터는 단순한 응대창구를 넘어, 고객
+                            경험의 시작점이자 기업의 브랜드 신뢰도를 좌우하는
+                            핵심 접점으로 자리 잡고 있습니다. 그러나 여전히 많은
+                            고객센터 운영은 상담 인력의 고강도 감정노동에
+                            의존하고 있으며, 이에 따른 이직률 상승, 인력 공백,
+                            업무 숙련도의 편차 등 구조적인 리스크가 지속적으로
+                            발생하고 있는 실정입니다.
+                        </p>
+                        <br />
+                        <p>
+                            현업에서의 경험을 통해 확인한 가장 큰 문제는, 우수한
+                            상담 인력의 이탈이 곧바로 서비스 품질 저하로
+                            이어진다는 점이며, 이로 인해 고객 만족도 하락 및
+                            브랜드 이미지의 일관성 유지에 큰 어려움을 겪고
+                            있다는 것이었습니다.
+                        </p>
+                        <br />
+                        <p>
+                            본 프로젝트는 이러한 문제를 근본적으로 해결하기 위한
+                            전략적 접근으로서, 상담 업무의 자동화를 지향하는
+                            것이 아닌,
+                            <strong
+                                >상담 인력의 전문성과 노하우를 AI 기술을 통해
+                                구조화</strong
+                            >하고, 이를 통해 신규 인력의 업무 적응을 지원하며,
+                            숙련된 품질의 고객 응대를 지속 가능하게 만드는 것을
+                            목표로 합니다.
+                        </p>
+                        <br />
+                        <p>
+                            이를 통해 상담 역량의 표준화와 지속 가능한 전승
+                            체계를 마련하고, 예기치 않은 인력 이탈 상황에서도
+                            고객 응대 품질을 일정 수준 이상으로 유지할 수 있는
+                            기반을 구축하고자 합니다. 궁극적으로는 고객 신뢰를
+                            기반으로 한 브랜드 이미지의 안정적 유지 및 고객
+                            경험의 일관성을 확보하는 데 중점을 두고 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <div class="accordion">
                 <div class="accordion-header">📌프로젝트 개요 및 추진 목적</div>
                 <div class="accordion-content">
@@ -293,7 +347,7 @@
                 <div class="accordion-header">📦 System Architecture</div>
                 <div class="accordion-content">
                     <pre><code>version: "1.0.3"
-project: "DREAME GPT Internal Support System"
+project: "고객센터 GPT Internal Support System"
 description: "Enterprise-Grade AI Assistant for Customer Success Teams"
 model: "gpt-4"
 embedding: "text-embedding-3-small (FAISS, cosine)"
@@ -331,35 +385,35 @@ auth:
                 <div class="accordion-header">⚙️ Live Deployment Guide</div>
                 <div class="accordion-content">
                     <pre><code># 프로덕션 환경 변수 설정
-export DREAME_ENV=production
-export DREAME_API_KEY=$(cat ~/.dreame/token.key)
+export Customer Center_ENV=production
+export Customer Center_API_KEY=$(cat ~/.Customer Center/token.key)
 source ~/.bash_profile
 
 # 시스템 디렉토리 초기화
-mkdir -p /opt/dreame-gpt/{config,data,logs,tmp,cache}
+mkdir -p /opt/Customer Center-gpt/{config,data,logs,tmp,cache}
 
 # 환경 구성 및 데이터 업로드
-cp ./config/system_config.yaml /opt/dreame-gpt/config/
-cp ./data/faq_dataset.xlsx /opt/dreame-gpt/data/
+cp ./config/system_config.yaml /opt/Customer Center-gpt/config/
+cp ./data/faq_dataset.xlsx /opt/Customer Center-gpt/data/
 
 # 벡터DB 리인덱싱 (AI 기억 초기화)
 python3 scripts/init_vector_db.py \
-    --config /opt/dreame-gpt/config/system_config.yaml \
+    --config /opt/Customer Center-gpt/config/system_config.yaml \
     --force-reindex \
     --log-level=DEBUG
 
 # 서비스 재시작
 systemctl daemon-reexec
-systemctl restart dreame-gpt.service
+systemctl restart Customer Center-gpt.service
 sleep 2
-systemctl status dreame-gpt.service --no-pager
+systemctl status Customer Center-gpt.service --no-pager
 
 # 실시간 인퍼런스 로그 모니터링
-tail -n 100 -f /var/log/dreame-gpt/inference.log | grep -iE "inference|latency|warning"
+tail -n 100 -f /var/log/Customer Center-gpt/inference.log | grep -iE "inference|latency|warning"
 
 # AI 헬스체크
 curl -s -X GET http://localhost:8080/healthcheck \
-  -H "X-Auth-Token: $DREAME_API_KEY" \
+  -H "X-Auth-Token: $Customer Center_API_KEY" \
   | jq .status</code></pre>
                 </div>
             </div>
