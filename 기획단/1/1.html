@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>드리미 AI 고객센터</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="bg-gray-900 text-white font-sans">
+        <div class="container mx-auto p-8">
+            <header class="mb-10">
+                <h1 class="text-4xl font-bold mb-2">드리미 AI 고객센터</h1>
+                <p class="text-gray-400">OpenAI 기반 고객지원 어시스턴트</p>
+            </header>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold mb-4">🔹 소개 영상</h2>
+                <div class="aspect-w-16 aspect-h-9 mb-6">
+                    <iframe
+                        class="w-full h-64 md:h-96 rounded-lg"
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        title="드리미 소개 영상"
+                        frameborder="0"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold mb-4">
+                    1. 자주 묻는 질문 바로가기
+                </h2>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>
+                        <a href="#" class="text-blue-400 hover:underline"
+                            >로봇 청소기 초기 설정 방법</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="text-blue-400 hover:underline"
+                            >Wi-Fi 연결 오류 해결</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="text-blue-400 hover:underline"
+                            >AS 신청은 어떻게 하나요?</a
+                        >
+                    </li>
+                </ul>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold mb-4">
+                    2. AI 상담원과 대화하기
+                </h2>
+                <p class="text-gray-300 mb-4">
+                    아래 버튼을 클릭하시면 AI 상담원에게 연결됩니다.
+                </p>
+                <a
+                    href="https://chat.openai.com/g/your-chatbot-link"
+                    target="_blank"
+                >
+                    <button
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        AI 상담원 연결하기
+                    </button>
+                </a>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold mb-4">3. 문의 접수</h2>
+                <form
+                    action="https://formsubmit.co/yoonwhan@naver.com"
+                    method="POST"
+                    class="space-y-4"
+                >
+                    <input
+                        type="hidden"
+                        name="_subject"
+                        value="드리미 고객 문의 접수"
+                    />
+                    <input
+                        type="hidden"
+                        name="_next"
+                        value="https://yourdomain.github.io/thanks.html"
+                    />
+
+                    <div>
+                        <label for="email" class="block mb-1">이메일</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-700"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="message" class="block mb-1"
+                            >문의 내용</label
+                        >
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="4"
+                            class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-700"
+                            required
+                        ></textarea>
+                    </div>
+                    <button
+                        type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        문의 보내기
+                    </button>
+                </form>
+            </section>
+
+            <footer class="mt-10 text-center text-gray-500 text-sm">
+                © 2025 드리미 고객센터. All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>

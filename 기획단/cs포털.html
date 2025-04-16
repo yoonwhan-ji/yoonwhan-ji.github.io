@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상담원 비서 포털</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: radial-gradient(circle at top, #1e1e1e, #121212);
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+    </style>
+  </head>
+  <body class="text-white font-sans">
+    <!-- 헤더 -->
+    <header class="p-4 border-b border-gray-700 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-yellow-400">드리미 상담원 포털</h1>
+      <span class="text-sm">안녕하세요, 상담원님 👋</span>
+    </header>
+
+    <!-- 탭 메뉴 -->
+    <div class="flex justify-center space-x-6 py-6 text-lg flex-wrap">
+      <button onclick="showTab('ai')" class="hover:text-yellow-400">AI 비서</button>
+      <button onclick="showTab('promo')" class="hover:text-yellow-400">이벤트</button>
+      <button onclick="showTab('notice')" class="hover:text-yellow-400">공지사항</button>
+      <button onclick="showTab('edu')" class="hover:text-yellow-400">교육자료</button>
+      <button onclick="showTab('vacation')" class="hover:text-yellow-400">휴가현황</button>
+    </div>
+
+    <!-- 콘텐츠 영역 -->
+    <main class="px-6 md:px-16 lg:px-32 space-y-10">
+      <!-- AI 비서 -->
+      <section id="tab-ai" class="glass p-6 hidden">
+        <h2 class="text-xl font-bold text-yellow-300 mb-3">AI 상담 비서</h2>
+        <p class="mb-4 text-sm">자주 사용하는 키워드: <span class="text-yellow-200">#배송 #고장 #설치문의</span></p>
+        <a href="https://chat.openai.com/gpt/your-custom-link" target="_blank" class="bg-yellow-400 hover:bg-yellow-500 text-black py-2 px-4 rounded">🚀 AI 비서 바로가기</a>
+      </section>
+
+      <!-- 이벤트 -->
+      <section id="tab-promo" class="glass p-6 hidden">
+        <h2 class="text-xl font-bold text-yellow-300 mb-4">이벤트 / 프로모션</h2>
+        <ul class="space-y-3">
+          <li class="border p-4 rounded hover:bg-yellow-900 cursor-pointer">📦 드리미 봄맞이 대청소 할인전</li>
+          <li class="border p-4 rounded hover:bg-yellow-900 cursor-pointer">🎁 후기 작성시 사은품 증정</li>
+          <li class="border p-4 rounded hover:bg-yellow-900 cursor-pointer">📣 설치비 무료 프로모션</li>
+        </ul>
+      </section>
+
+      <!-- 공지사항 -->
+      <section id="tab-notice" class="glass p-6 hidden">
+        <h2 class="text-xl font-bold text-yellow-300 mb-4">사내 공지사항</h2>
+        <ul class="space-y-2">
+          <li>🗓 <strong>2025-04-10:</strong> CS 프로세스 변경 안내</li>
+          <li>🗓 <strong>2025-04-07:</strong> 긴급 점검 공지 (4/8 새벽 1시)</li>
+          <li>🗓 <strong>2025-04-04:</strong> 신입교육 자료 업로드 안내</li>
+        </ul>
+      </section>
+
+      <!-- 교육자료 -->
+      <section id="tab-edu" class="glass p-6 hidden">
+        <h2 class="text-xl font-bold text-yellow-300 mb-4">교육자료실</h2>
+        <ul class="space-y-3">
+          <li class="border p-4 rounded hover:bg-yellow-900 cursor-pointer">
+            📘 <a href="#">신입 상담원 매뉴얼 (PDF)</a>
+          </li>
+          <li class="border p-4 rounded hover:bg-yellow-900 cursor-pointer">
+            🎓 <a href="#">VOC 대응 가이드</a>
+          </li>
+          <li class="border p-4 rounded hover:bg-yellow-900 cursor-pointer">
+            🧠 <a href="#">드리미 제품별 특이사항 정리</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 휴가현황 -->
+      <section id="tab-vacation" class="glass p-6 hidden">
+        <h2 class="text-xl font-bold text-yellow-300 mb-4">팀 휴가현황</h2>
+        <ul class="space-y-2 text-sm">
+          <li>👤 <strong>김하늘</strong> - 4/18~4/19 휴가</li>
+          <li>👤 <strong>이재훈</strong> - 4/22 연차</li>
+          <li>👤 <strong>박수진</strong> - 4/16 반차 (오후)</li>
+        </ul>
+      </section>
+    </main>
+
+    <script>
+      function showTab(tab) {
+        document.querySelectorAll("section").forEach((el) => el.classList.add("hidden"));
+        document.getElementById("tab-" + tab).classList.remove("hidden");
+      }
+
+      // 기본 탭 설정
+      showTab("ai");
+    </script>
+  </body>
+</html>
